@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" ng-app="Senso">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Senso</title>
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body ng-controller="clanController as clan">
+
+    <div class="container-fluid">
+      <h3>{{ clan.clanName }}</h3>
+      <p>Hello Clanmates</p>
+
+      Sortable <input type="checkbox" ng-model="clan.sortable">
+
+      <div ng-hide="clan.sortable">
+        <div ng-repeat="item in clan.members">
+          <div class="{{clan.getColor(item.war)}}">
+            <span><input type="text" ng-model="item.name"></span>
+            <button type="button" class="btn btn-primary" ng-model="item.war" btn-checkbox>War Status</button>
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="clan.sortable">
+        <div class="sortable-container" sv-root sv-part="clan.members">
+          <div ng-repeat="item in clan.members" sv-element="opts">
+            <div class="{{clan.getColor(item.war)}}">
+              <span><input type="text" ng-model="item.name"></span>
+              <button type="button" class="btn btn-primary" ng-model="item.war" btn-checkbox>War Status</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div>
+        <h4>Add a new member</h4>
+        <form ng-submit="clan.addToMembers()">
+          <label>Name:</label>
+          <input type="text" ng-model="clan.newMember" size="30" placeholder="Enter member name">
+          <input class="btn-primary" type="submit" value="add">
+        </form>
+      </div>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.1.js"></script>
+    <script src="bower_components/angular-sortable-view/src/angular-sortable-view.js"></script>
+    <script src="./dist/app.js"> </script>
+  </body>
+</html>
