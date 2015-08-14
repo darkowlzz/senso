@@ -1,11 +1,16 @@
 class ClanController {
-  constructor($scope) {
+  constructor($scope, database) {
     this.scope = $scope;
+    this.database = database;
 
     this.newMember = '';
     this.sortable = false;
     this.clanName = 'Age of Empires';
     this.members = [];
+
+    this.database.getClanData().then((data) => {
+      this.members = data.members;
+    });
   }
 
   getColor (war) {
@@ -20,16 +25,19 @@ class ClanController {
     if (this.newMember == '') {
       return;
     }
-    console.log('adding', this.newMember);
     this.members.push({name: this.newMember, note: '', war: false});
     this.newMember = '';
   }
 
-  printMembers () {
-    console.log(JSON.stringify(this.members));
+  applyChanges () {
+    this.database.updateClan( { name: this.clanName,
+                                members: this.members } ).then(() => {
+                                  console.log('update successful');
+                                  // change loading status
+                                });
   }
 }
 
-ClanController.$inject = ['$scope'];
+ClanController.$inject = ['$scope', 'database'];
 
 export { ClanController };

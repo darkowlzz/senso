@@ -1,7 +1,9 @@
-import {ClanController} from './model/ClanController';
+import { ClanController } from './model/ClanController';
+import { DatabaseService } from './service/Database';
 
 const moduleName = 'Senso';
 
 angular
   .module(moduleName, ['ui.bootstrap', 'angular-sortable-view'])
-  .controller('clanController', ClanController);
+  .controller('clanController', ClanController)
+  .factory('database', DatabaseService);

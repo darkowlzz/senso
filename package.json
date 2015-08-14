@@ -2,6 +2,10 @@
   "name": "senso",
   "version": "0.0.0",
   "description": "coc war member selector",
+  "scripts": {
+    "start": "npm run build && node server-compiled.js",
+    "build": "gulp build && babel src/server.js --out-file server-compiled.js"
+  },
   "devDependencies": {
     "babelify": "~5.0.3",
     "browser-sync": "^1.7.1",
@@ -16,6 +20,9 @@
   "author": "Sunny <me@darkowlzz.space>",
   "license": "MIT",
   "dependencies": {
-    "bower": "^1.4.1"
+    "body-parser": "^1.13.3",
+    "bower": "^1.4.1",
+    "express": "^4.13.3",
+    "mongoose": "^4.1.2"
   }
 }
