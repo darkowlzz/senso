@@ -1,9 +1,31 @@
-import { ClanController } from './model/ClanController';
-import { DatabaseService } from './service/Database';
+import { MainController } from './controllers/MainController';
+import { MembersController } from './controllers/MembersController';
+import { WarController } from './controllers/WarController';
+import { DatabaseService } from './services/Database';
 
 const moduleName = 'Senso';
 
 angular
-  .module(moduleName, ['ngMaterial', 'ngMdIcons', 'angular-sortable-view'])
-  .controller('clanController', ClanController)
-  .factory('database', DatabaseService);
+  .module(moduleName, ['ngMaterial', 'ngMdIcons', 'ui.router'])
+  .controller('MainCtrl', MainController)
+  .controller('MembersCtrl', MembersController)
+  .controller('WarCtrl', WarController)
+  .factory('database', DatabaseService)
+  .config(['$stateProvider', '$urlRouterProvider',
+    function ($stateProvider, $urlRouterProvider) {
+      $urlRouterProvider.otherwise('/members');
+
+      $stateProvider
+        .state('members', {
+          url: '/members',
+          templateUrl: 'templates/members.html',
+          controller: 'MembersCtrl',
+          controllerAs: 'mem'
+        })
+        .state('war', {
+          url: '/war',
+          templateUrl: 'templates/war.html',
+          controller: 'WarCtrl',
+          controllerAs: 'war'
+        });
+    }]);

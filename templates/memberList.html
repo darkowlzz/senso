@@ -1,13 +1,13 @@
-<md-list-item class="{{clan.getColor(item.war)}}" layout-margin layout-padding>
+<md-list-item class="{{mem.getColor(item.war)}}" layout-margin layout-padding>
   <p>{{ item.name }} </p>
 
-  <div ng-show="clan.sortable">
+  <div ng-show="mem.sortable">
     <md-button title="Move up" aria-label="move up"
-      class="md-icon-button" ng-click="clan.moveUp(item)">
+      class="md-icon-button" ng-click="mem.moveUp(item)">
       <ng-md-icon icon="keyboard_arrow_up"></ng-md-icon>
     </md-button>
     <md-button title="Move down" aria-label="move down"
-      class="md-icon-button" ng-click="clan.moveDown(item)">
+      class="md-icon-button" ng-click="mem.moveDown(item)">
       <ng-md-icon icon="keyboard_arrow_down"></ng-md-icon>
     </md-button>
   </div>
