@@ -10,54 +10,92 @@
 
     <meta name="mobile-web-app-capable" content="yes">
 
+    <!--
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
     <link href="style.css" rel="stylesheet">
   </head>
-  <body ng-controller="clanController as clan">
+  <body layout="column" ng-controller="clanController as clan">
 
-    <div class="container-fluid">
-      <h3>{{ clan.clanName }}</h3>
-      <p>Hello Clanmates</p>
-
-      Sortable <input type="checkbox" ng-model="clan.sortable">
-
-      <div ng-hide="clan.sortable">
-        <div ng-repeat="item in clan.members">
-          <div class="{{clan.getColor(item.war)}}">
-            <span><input type="text" ng-model="item.name"></span>
-            <button type="button" class="btn btn-primary" ng-model="item.war" btn-checkbox>War Status</button>
-          </div>
-        </div>
+    <md-toolbar layout="row">
+      <div class="md-toolbar-tools">
+        <!--
+        <md-button ng-click="" class="md-icon-button">
+          <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
+        </md-button>
+        -->
+        <md-checkbox
+          ng-model="clan.sortable"
+          aria-label="Sort"></md-checkbox>
+        <ng-md-icon icon="sort"></ng-md-icon>
+        <h1>{{ clan.clanName }}</h1>
       </div>
+    </md-toolbar>
 
-      <div ng-show="clan.sortable">
-        <div class="sortable-container" sv-root sv-part="clan.members">
-          <div ng-repeat="item in clan.members" sv-element="opts">
-            <div class="{{clan.getColor(item.war)}}">
-              <span><input type="text" ng-model="item.name"></span>
-              <button type="button" class="btn btn-primary" ng-model="item.war" btn-checkbox>War Status</button>
+    <div layout="row" flex>
+      <!--
+      <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+      </md-sidenav>
+      -->
+      <div layout="column" flex id="content">
+        <md-content layout-sm="column" layout-gt-sm="row" flex class="md-padding">
+
+            <div flex>
+              <div ng-hide="clan.sortable">
+                <md-list>
+                  <div ng-repeat="item in clan.members">
+                    <div ng-include="'templates/memberList.html'"></div>
+                  </div>
+                </md-list>
+              </div>
+
+              <div ng-show="clan.sortable">
+                <md-list>
+                  <div class="sortable-container" sv-root sv-part="clan.members">
+                    <div ng-repeat="item in clan.members" sv-element="opts">
+                      <div ng-include="'templates/memberList.html'"></div>
+                    </div>
+                  </div>
+                </md-list>
+              </div>
             </div>
-          </div>
-        </div>
+
+ 
+            <div flex>
+              <div>
+                <h4>Add a new member</h4>
+                <form ng-submit="clan.addToMembers()">
+                  <label>Name:</label>
+                  <input type="text" ng-model="clan.newMember" placeholder="Enter member name">
+                  <md-button class="md-raised md-primary" type="submit">Add</md-button>
+                </form>
+              </div>
+
+              <div>
+                <md-button class="md-raised md-primary" ng-click="clan.applyChanges()">Apply Changes</md-button>
+              </div>
+            </div>
+
+        </md-content>
       </div>
 
-
-      <div>
-        <h4>Add a new member</h4>
-        <form ng-submit="clan.addToMembers()">
-          <label>Name:</label>
-          <input type="text" ng-model="clan.newMember" size="30" placeholder="Enter member name">
-          <input class="btn-primary" type="submit" value="add">
-        </form>
-      </div>
-
-      <div>
-        <button type="button" class="btn btn-primary" ng-click="clan.applyChanges()">Apply Changes</button>
-      </div>
     </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <!--
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.1.js"></script>
+    -->
+    <!-- Angular Material deps -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.5.0/angular-material-icons.min.js"></script>
+
     <script src="bower_components/angular-sortable-view/src/angular-sortable-view.js"></script>
     <script src="./dist/app.js"> </script>
   </body>

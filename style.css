@@ -1,17 +1,7 @@
-.member {
-  background-color: cyan;
-  width: 50%;
-  margin-bottom: 20px;
-}
-
 .war {
-  background-color: green;
-  width: 50%;
-  margin-bottom: 20px;
+  background-color: #bee45b;
 }
 
 .nowar {
-  background-color: red;
-  width: 50%;
-  margin-bottom: 20px;
+  background-color: #f55257;
 }

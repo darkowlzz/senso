@@ -1,0 +1,17 @@
+<md-list-item class="{{clan.getColor(item.war)}}" layout-margin layout-padding>
+  <p>{{ item.name }} </p>
+
+  <div ng-show="clan.sortable">
+    <md-button title="Move up"
+      class="md-icon-button">
+      <ng-md-icon icon="keyboard_arrow_up"></ng-md-icon>
+    </md-button>
+    <md-button title="Move down"
+      class="md-icon-button">
+      <ng-md-icon icon="keyboard_arrow_down"></ng-md-icon>
+    </md-button>
+  </div>
+
+  <md-button class="md-raised md-primary">Edit</md-button>
+
+</md-list-item>

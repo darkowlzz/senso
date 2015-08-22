@@ -4,6 +4,6 @@ import { DatabaseService } from './service/Database';
 const moduleName = 'Senso';
 
 angular
-  .module(moduleName, ['ui.bootstrap', 'angular-sortable-view'])
+  .module(moduleName, ['ngMaterial', 'ngMdIcons', 'angular-sortable-view'])
   .controller('clanController', ClanController)
   .factory('database', DatabaseService);

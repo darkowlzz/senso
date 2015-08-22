@@ -33,7 +33,7 @@ router.get('/', function (req, res) {
 });
 
 router.post('/newClan', function (req, res) {
-  var data = req.body.data;
+  var data = req.body;
   var aClan = new Clan({
     name: data.name || '',
     members: []

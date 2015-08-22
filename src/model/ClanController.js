@@ -1,6 +1,7 @@
 class ClanController {
-  constructor($scope, database) {
+  constructor($scope, $mdSidenav, database) {
     this.scope = $scope;
+    this.mdSidenav = $mdSidenav;
     this.database = database;
 
     this.newMember = '';
@@ -11,6 +12,10 @@ class ClanController {
     this.database.getClanData().then((data) => {
       this.members = data.members;
     });
+
+    this.scope.toggleSidenav = function (menuId) {
+      $mdSidenav(menuId).toggle();
+    };
   }
 
   getColor (war) {
@@ -38,6 +43,6 @@ class ClanController {
   }
 }
 
-ClanController.$inject = ['$scope', 'database'];
+ClanController.$inject = ['$scope', '$mdSidenav', 'database'];
 
 export { ClanController };
