@@ -32,11 +32,11 @@ class MembersController {
   }
 
   applyChanges () {
-    this.database.updateClan( { name: this.rootScope.clanName,
-                                members: this.members } ).then(() => {
-                                  console.log('update successful');
-                                  // change loading status
-                                });
+    this.database.updateClanMembers( { name: this.rootScope.clanName,
+                                       members: this.members } ).then(() => {
+                                         console.log('update successful');
+                                         // change loading status
+                                      });
   }
 
   moveUp (item) {

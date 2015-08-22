@@ -6,7 +6,7 @@
 
 <div layout="column" flex>
   
-  <div layout-gt-md="row" flex class="md-padding">
+  <div flex class="md-padding">
     <div flex>
       <md-list>
         <div ng-repeat="item in mem.members">
@@ -16,6 +16,10 @@
     </div>
 
     <div flex>
+      <div>
+        <md-button class="md-raised md-primary" ng-click="mem.applyChanges()">Save Changes</md-button>
+      </div>
+
       <fieldset class="standard">
         <legend>Add a new member</legend>
         <form ng-submit="mem.addToMembers()">
@@ -26,10 +30,6 @@
           <md-button class="md-raised md-primary" type="submit">Add</md-button>
         </form>
       </fieldset>
-
-      <div>
-        <md-button class="md-raised md-primary" ng-click="mem.applyChanges()">Apply Changes</md-button>
-      </div>
 
       <div>
         <md-checkbox ng-model="mem.delete" aria-label="Delete">

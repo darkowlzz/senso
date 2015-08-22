@@ -1,1 +1,42 @@
-<h3>WAR TIME</h3>
+<div layout="column" flex>
+
+  <div flex class="md-padding">
+    <div layout="row" layout-align="center center">
+        <h3>War ready members.</h3>
+    </div>
+
+    <md-list>
+      <div ng-repeat="member in war.members">
+        <md-list-item class="war" layout-margin layout-padding>
+          <ng-md-icon icon="person" size="20"></ng-md-icon>
+          <p>{{ member.name }} </p>
+          <md-button class="md-raised md-primary" ng-click="war.addToWar(member)">Add to War</md-button>
+        </md-list-item>
+      </div>
+    </md-list>
+
+
+    <div layout="row" layout-align="center center">
+      <h3>Members selected for War</h3>
+    </div>
+
+    <md-list>
+      <div ng-repeat="member in war.warMembers">
+        <md-list-item class="war" layout-margin layout-padding>
+          <ng-md-icon icon="person" size="20"></ng-md-icon>
+          <p>{{ member.name }} </p>
+          <md-button class="md-raise md-warn" ng-click="war.removeFromWar(member)">Move Out</md-button>
+        </md-list-item>
+      </div>
+    </md-list>
+
+    <div layout="row" layout-align="center center">
+      <md-button class="md-raised md-primary" ng-click="war.applyChanges()">Save Changes</md-button>
+    </div>
+
+  </div>
+
+  <div layout="row" layout-align="center center">
+    <md-button class="md-raised md-warn">Start War</md-button>
+  </div>
+</div>
