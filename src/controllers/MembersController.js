@@ -1,8 +1,9 @@
 class MembersController {
-  constructor($rootScope, database) {
-    console.log('init members');
+  constructor($rootScope, database, $mdDialog) {
     this.rootScope = $rootScope;
     this.database = database;
+    this.mdDialog = $mdDialog;
+
     this.newMember = '';
     this.sortable = false;
     this.members = [];
@@ -45,8 +46,40 @@ class MembersController {
     this.members.moveDown(item);
   }
 
+  openEditor (ev, item) {
+    console.log(item.name);
+    this.mdDialog.show({
+      controller: EditorController,
+      templateUrl: 'templates/memberEdit.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      locals: { player: item }
+    })
+    .then((answer) => {
+      // done
+    }, function () {
+      // cancelled
+    });
+  }
+
 }
 
-MembersController.$inject = ['$rootScope', 'database'];
+MembersController.$inject = ['$rootScope', 'database', '$mdDialog'];
+
+
+function EditorController ($scope, $mdDialog, player) {
+  $scope.player = player;
+
+  $scope.hide = function () {
+    $mdDialog.hide();
+  };
+  $scope.cancel = function () {
+    $mdDialog.cancel();
+  };
+  $scope.answer = function (answer) {
+    $mdDialog.hide(answer);
+  };
+}
 
 export { MembersController };

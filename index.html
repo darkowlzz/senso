@@ -63,36 +63,40 @@
     <!--  Sortable view (touch and move list items)
     <script src="bower_components/angular-sortable-view/src/angular-sortable-view.js"></script>
     -->
+
     <script>
-    Array.prototype.moveUp = function(value, by) {
-      var index = this.indexOf(value),
-          newPos = index - (by || 1);
+      Array.prototype.moveUp = function(value, by) {
+        var index = this.indexOf(value),
+            newPos = index - (by || 1);
 
-      if(index === -1)
-          throw new Error("Element not found in array");
+        if(index === -1)
+            throw new Error("Element not found in array");
 
-      if(newPos < 0)
-          newPos = 0;
+        if(newPos < 0)
+            newPos = 0;
 
-      this.splice(index,1);
-      this.splice(newPos,0,value);
-    };
+        this.splice(index,1);
+        this.splice(newPos,0,value);
+      };
 
-    Array.prototype.moveDown = function(value, by) {
-      var index = this.indexOf(value),
-          newPos = index + (by || 1);
+      Array.prototype.moveDown = function(value, by) {
+        var index = this.indexOf(value),
+            newPos = index + (by || 1);
 
-      if(index === -1)
-          throw new Error("Element not found in array");
+        if(index === -1)
+            throw new Error("Element not found in array");
 
-      if(newPos >= this.length)
-          newPos = this.length;
+        if(newPos >= this.length)
+            newPos = this.length;
 
-      this.splice(index, 1);
-      this.splice(newPos,0,value);
-    };
-
+        this.splice(index, 1);
+        this.splice(newPos,0,value);
+      };
     </script>
+
+    <!-- Lodash -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+
     <script src="./dist/app.js"> </script>
   </body>
 </html>

@@ -7,7 +7,6 @@ class MainController {
     $rootScope.clanName = 'Age of Empires';
 
     $rootScope.$on('$stateChangeStart', () => {
-      console.log('heard state change');
       this.mdSidenav(this.sideNavId).close();
     })
   }

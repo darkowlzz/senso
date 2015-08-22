@@ -1,0 +1,24 @@
+<md-dialog aria-label="Member Edit">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Player Edit</h2>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:800px;max-height:810px;">
+      <div>
+        <md-input-container>
+          <label>Name</label>
+          <input ng-model="player.name" disabled>
+        </md-input-container>
+        <md-switch class="md-primary" ng-model="player.war" md-no-ink aria-label="Toggle War">
+          War
+        </md-switch>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+      <md-button ng-click="answer(player)">Done</md-button>
+    </div>
+  </form>
+</md-dialog>
