@@ -6,6 +6,7 @@ class MembersController {
 
     this.newMember = '';
     this.sortable = false;
+    this.delete = false;
     this.members = [];
     this.foo = 'fooooo';
 
@@ -61,6 +62,25 @@ class MembersController {
     }, function () {
       // cancelled
     });
+  }
+
+  deleteMember (ev, item) {
+    console.log('delete', item.name);
+    let confirm = this.mdDialog.confirm()
+      .title('Confirm Delete?')
+      .content('Are you sure you want to delete ' + item.name + ' from the clan?')
+      .ariaLabel('Delete Member')
+      .ok('Delete the sucker!')
+      .cancel('Cancel')
+      .targetEvent(ev);
+    this.mdDialog.show(confirm).then(() => {
+      _.remove(this.members, (mem) => {
+        return mem.name == item.name;
+      });
+      console.log(this.members)
+    }, () => {
+      console.log('cancelled');
+    })
   }
 
 }

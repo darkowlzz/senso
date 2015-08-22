@@ -16,19 +16,30 @@
     </div>
 
     <div flex>
-      <div>
-        <h4>Add a new member</h4>
+      <fieldset class="standard">
+        <legend>Add a new member</legend>
         <form ng-submit="mem.addToMembers()">
-          <label>Name:</label>
-          <input type="text" ng-model="mem.newMember" placeholder="Enter member name">
+          <md-input-container>
+            <label>Member Name</label>
+            <input ng-model="mem.newMember">
+          </md-input-container>
           <md-button class="md-raised md-primary" type="submit">Add</md-button>
         </form>
-      </div>
+      </fieldset>
 
       <div>
         <md-button class="md-raised md-primary" ng-click="mem.applyChanges()">Apply Changes</md-button>
       </div>
+
+      <div>
+        <md-checkbox ng-model="mem.delete" aria-label="Delete">
+          <ng-md-icon icon="delete"></ng-md-icon>
+          Delete Members
+        </md-checkbox>
+      </div>
+
     </div>
+
 
   </div>
 </div>
