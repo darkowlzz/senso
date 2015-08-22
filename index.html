@@ -20,65 +20,21 @@
 
     <md-toolbar layout="row">
       <div class="md-toolbar-tools">
-        <!--
-        <md-button ng-click="" class="md-icon-button">
+        <md-button ng-click="clan.toggleSidenav('left')" hide-gt-md class="md-icon-button">
           <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
         </md-button>
-        -->
-        <md-checkbox
-          ng-model="clan.sortable"
-          aria-label="Sort"></md-checkbox>
-        <ng-md-icon icon="sort"></ng-md-icon>
-        <h1>{{ clan.clanName }}</h1>
+        <h2>{{ clan.clanName }}</h2>
       </div>
     </md-toolbar>
 
     <div layout="row" flex>
-      <!--
-      <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+      <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <h2>Side side bar</h2>
       </md-sidenav>
-      -->
-      <div layout="column" flex id="content">
-        <md-content layout-sm="column" layout-gt-sm="row" flex class="md-padding">
 
-            <div flex>
-              <div ng-hide="clan.sortable">
-                <md-list>
-                  <div ng-repeat="item in clan.members">
-                    <div ng-include="'templates/memberList.html'"></div>
-                  </div>
-                </md-list>
-              </div>
-
-              <div ng-show="clan.sortable">
-                <md-list>
-                  <div class="sortable-container" sv-root sv-part="clan.members">
-                    <div ng-repeat="item in clan.members" sv-element="opts">
-                      <div ng-include="'templates/memberList.html'"></div>
-                    </div>
-                  </div>
-                </md-list>
-              </div>
-            </div>
-
- 
-            <div flex>
-              <div>
-                <h4>Add a new member</h4>
-                <form ng-submit="clan.addToMembers()">
-                  <label>Name:</label>
-                  <input type="text" ng-model="clan.newMember" placeholder="Enter member name">
-                  <md-button class="md-raised md-primary" type="submit">Add</md-button>
-                </form>
-              </div>
-
-              <div>
-                <md-button class="md-raised md-primary" ng-click="clan.applyChanges()">Apply Changes</md-button>
-              </div>
-            </div>
-
-        </md-content>
-      </div>
+      <md-content layout="column" flex id="content">
+        <div ng-include="'templates/members.html'"></div>
+      </md-content>
 
     </div>
 

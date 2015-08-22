@@ -2,12 +2,12 @@
   <p>{{ item.name }} </p>
 
   <div ng-show="clan.sortable">
-    <md-button title="Move up"
-      class="md-icon-button">
+    <md-button title="Move up" aria-label="move up"
+      class="md-icon-button" ng-click="clan.moveUp(item)">
       <ng-md-icon icon="keyboard_arrow_up"></ng-md-icon>
     </md-button>
-    <md-button title="Move down"
-      class="md-icon-button">
+    <md-button title="Move down" aria-label="move down"
+      class="md-icon-button" ng-click="clan.moveDown(item)">
       <ng-md-icon icon="keyboard_arrow_down"></ng-md-icon>
     </md-button>
   </div>

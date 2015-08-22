@@ -1,0 +1,35 @@
+<div layout-margin layout-padding>
+  <md-checkbox
+      ng-model="clan.sortable"
+      aria-label="Sort"><ng-md-icon icon="sort"></ng-md-icon>Sort Members</md-checkbox>
+</div>
+
+<div layout="column" flex>
+  
+  <div layout-gt-md="row" flex class="md-padding">
+
+    <div flex>
+      <md-list>
+        <div ng-repeat="item in clan.members">
+          <div ng-include="'templates/memberList.html'"></div>
+        </div>
+      </md-list>
+    </div>
+
+    <div flex>
+      <div>
+        <h4>Add a new member</h4>
+        <form ng-submit="clan.addToMembers()">
+          <label>Name:</label>
+          <input type="text" ng-model="clan.newMember" placeholder="Enter member name">
+          <md-button class="md-raised md-primary" type="submit">Add</md-button>
+        </form>
+      </div>
+
+      <div>
+        <md-button class="md-raised md-primary" ng-click="clan.applyChanges()">Apply Changes</md-button>
+      </div>
+    </div>
+
+  </div>
+</div>
