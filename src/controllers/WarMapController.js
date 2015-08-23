@@ -72,14 +72,15 @@ class WarMapController {
   }
 
   endWar () {
-    this.database.updateWarMap(
-        { initWarMap: this.initWarMap,
-          warMap: [] }).then(() => {
-      console.log('warMap cleanedup before ending');
-      this.database.toggleWar().then(() => {
-        this.state.go('war');
+    this.database.warMembersReset().then(() => {
+      this.database.updateWarMap(
+          { initWarMap: this.initWarMap,
+            warMap: [] }).then(() => {
+        this.database.toggleWar().then(() => {
+          this.state.go('war');
+        });
       });
-    });
+    })
   }
 }
 

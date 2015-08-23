@@ -148,6 +148,19 @@ router.post('/updateWarMembers', function (req, res) {
   });
 });
 
+router.get('/warMembersReset', function (req, res) {
+  Clan.findOne({ name: 'Age of Empires' }, (err, rObj) => {
+    rObj.warMembers = [];
+    rObj.save((err, result) => {
+      if (err) {
+        res.json({ error: err });
+      } else {
+        res.json({ success: true });
+      }
+    })
+  });
+});
+
 // Get full clan data
 router.get('/clanData', function (req, res) {
   Clan.findOne({ name: 'Age of Empires'}).exec(function (err, result) {

@@ -92,7 +92,6 @@ class WarController {
       map.push({ number: i, player: null });
     }
     this.database.updateWarMap({initWarMap: [], warMap: map}).then(() => {
-      console.log('warMap initialized before start');
       this.database.toggleWar().then(() => {
         this.state.go('warmap');
       });

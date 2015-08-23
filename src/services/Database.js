@@ -39,6 +39,13 @@ function DatabaseService ($http) {
       return promise;
     },
 
+    warMembersReset: function warMembersReset () {
+      let promise = $http.get('/warMembersReset').then((resp) => {
+        return resp.data;
+      });
+      return promise;
+    },
+
     toggleWar: function toggleWar () {
       let promise = $http.get('/toggleWar').then((resp) => {
         return resp.data;
