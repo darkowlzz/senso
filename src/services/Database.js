@@ -37,6 +37,13 @@ function DatabaseService ($http) {
         return resp.data;
       });
       return promise;
+    },
+
+    toggleWar: function toggleWar () {
+      let promise = $http.get('/toggleWar').then((resp) => {
+        return resp.data;
+      });
+      return promise;
     }
   }
 }

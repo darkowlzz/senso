@@ -129,8 +129,8 @@ router.post('/updateWarMembers', function (req, res) {
 
 // Get full clan data
 router.get('/clanData', function (req, res) {
-  Clan.find({ name: 'Age of Empires'}).exec(function (err, result) {
-    res.json(result[0]);
+  Clan.findOne({ name: 'Age of Empires'}).exec(function (err, result) {
+    res.json(result);
   });
 });
 
@@ -148,6 +148,20 @@ router.get('/warReadyMembers', function (req, res) {
 router.get('/warMembers', function (req, res) {
   Clan.findOne({ name: 'Age of Empires' }).exec(function (err, result) {
     res.json(result.warMembers);
+  });
+});
+
+// Toggle war status
+router.get('/toggleWar', function (req, res) {
+  Clan.findOne({ name: 'Age of Empires' }, (err, rObj) => {
+    rObj.inWar = ! rObj.inWar;
+    rObj.save((err, result) => {
+      if (err) {
+        res.json({ error: err });
+      } else {
+        res.json({ success: true });
+      }
+    });
   });
 });
 

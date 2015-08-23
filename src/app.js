@@ -1,6 +1,7 @@
 import { MainController } from './controllers/MainController';
 import { MembersController } from './controllers/MembersController';
 import { WarController } from './controllers/WarController';
+import { WarMapController } from './controllers/WarMapController';
 
 import { DatabaseService } from './services/Database';
 
@@ -13,6 +14,7 @@ angular
   .controller('MainCtrl', MainController)
   .controller('MembersCtrl', MembersController)
   .controller('WarCtrl', WarController)
+  .controller('WarMapCtrl', WarMapController)
   .factory('database', DatabaseService)
   .constant('CONST', CONST)
   .config(['$stateProvider', '$urlRouterProvider',
@@ -31,5 +33,11 @@ angular
           templateUrl: 'templates/war.html',
           controller: 'WarCtrl',
           controllerAs: 'war'
+        })
+        .state('warmap', {
+          url: '/warmap',
+          templateUrl: 'templates/warMap.html',
+          controller: 'WarMapCtrl',
+          controllerAs: 'warMap'
         });
     }]);

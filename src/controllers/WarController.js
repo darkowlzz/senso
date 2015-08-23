@@ -1,13 +1,20 @@
 class WarController {
-  constructor($rootScope, database, $mdDialog, CONST) {
+  constructor($rootScope, database, $mdDialog, CONST, $state) {
     this.rootScope = $rootScope;
     this.database = database;
     this.mdDialog = $mdDialog;
     this.CONST = CONST;
+    this.state = $state;
 
     this.members = [];
     this.warMembers = [];
     this.initWarMembers = [];
+
+    this.database.getClanData().then((data) => {
+      if (data.inWar) {
+        this.state.go('warmap');
+      }
+    });
 
     this.database.getWarReadyMembers().then((warReady) => {
       this.database.getWarMembers().then((warMembers) => {
@@ -78,8 +85,15 @@ class WarController {
       return mem.name == item.name;
     });
   }
+
+  toggleWar () {
+    this.database.toggleWar().then((data) => {
+      this.state.go('warmap');
+    });
+  }
 }
 
-WarController.$inject = ['$rootScope', 'database', '$mdDialog', 'CONST'];
+WarController.$inject = ['$rootScope', 'database', '$mdDialog',
+                         'CONST', '$state'];
 
 export { WarController };
