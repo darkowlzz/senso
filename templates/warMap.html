@@ -1,6 +1,30 @@
-<h2>This is a warmap</h2>
+<div layout="column" flex>
 
-<div layout="row" layout-align="center center">
-  <md-button class="md-raised md-warn" ng-click="warMap.toggleWar()">End War</md-button>
+  <div flex class="md-padding">
+    <div layout="row" layout-align="center center">
+      <h2>WARMAP</h2>
+    </div>
+
+    <md-list layout="column" layout-align="center center">
+      <md-list-item ng-repeat="i in warMap.warMap"
+        layout-margin layout-padding>
+        <md-button ng-click="warMap.openEditor($event, i)" class="md-raised">{{i.number}} - {{i.player}}</md-button>
+      </md-list-item>
+    </md-list>
+
+    <div layout="row" layout-align="center center" layout-wrap>
+      <md-button class="md-raised md-accent" ng-repeat="member in warMap.warMembers">{{member.name}}</md-button>
+    </div>
+
+    <div layout="row" layout-align="center center">
+      <md-button class="md-raised md-primary" ng-click="warMap.applyChanges($event)">Save Changes</md-button>
+    </div>
+
+  </div>
+
+
+  <div layout="row" layout-align="center center">
+    <md-button class="md-raised md-warn" ng-click="warMap.endWar()">End War</md-button>
+  </div>
+
 </div>
-

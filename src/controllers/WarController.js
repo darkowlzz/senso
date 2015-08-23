@@ -86,10 +86,17 @@ class WarController {
     });
   }
 
-  toggleWar () {
-    this.database.toggleWar().then((data) => {
-      this.state.go('warmap');
-    });
+  startWar () {
+    let map = [];
+    for (let i = 1; i <= this.warMembers.length; i++) {
+      map.push({ number: i, player: null });
+    }
+    this.database.updateWarMap({initWarMap: [], warMap: map}).then(() => {
+      console.log('warMap initialized before start');
+      this.database.toggleWar().then(() => {
+        this.state.go('warmap');
+      });
+    })
   }
 }
 

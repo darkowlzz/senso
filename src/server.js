@@ -36,7 +36,8 @@ let clanSchema = new mongoose.Schema({
   name: { type: String },
   members: { type: Array, 'default': [] },
   warMembers: { type: Array, 'default': [] },
-  inWar: { type: Boolean, 'default': false }
+  inWar: { type: Boolean, 'default': false },
+  warMap: { type: Array, 'default': [] }
 });
 let Clan = mongoose.model('clan', clanSchema);
 
@@ -86,6 +87,26 @@ router.post('/updateClanMembers', function (req, res) {
           res.json({ error: err });
         } else {
           console.log('saved successfully');
+          res.json({ success: true });
+        }
+      });
+    }
+  });
+});
+
+// Update war map details
+router.post('/updateWarMap', function (req, res) {
+  let data = req.body;
+  Clan.findOne({ name: 'Age of Empires' }, function (err, rObj) {
+    if (! arraysEqual(data.initWarMap, rObj.warMap)) {
+      console.log('data not the same');
+      res.json({ success: false, reason: CONFLICT, newData: rObj.warMap });
+    } else {
+      rObj.warMap = data.warMap;
+      rObj.save((err, result) => {
+        if (err) {
+          res.json({ error: err });
+        } else {
           res.json({ success: true });
         }
       });

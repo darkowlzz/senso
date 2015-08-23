@@ -85,7 +85,7 @@ class MembersController {
     })
     .then((answer) => {
       // done
-    }, function () {
+    }, () => {
       // cancelled
     });
   }

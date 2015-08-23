@@ -44,6 +44,13 @@ function DatabaseService ($http) {
         return resp.data;
       });
       return promise;
+    },
+
+    updateWarMap: function updateWarMap (data) {
+      let promise = $http.post('/updateWarMap', data).then((resp) => {
+        return resp.data;
+      });
+      return promise;
     }
   }
 }
