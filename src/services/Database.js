@@ -11,6 +11,7 @@ function DatabaseService ($http) {
 
     updateClanMembers: function updateClanMembers (data) {
       let promise = $http.post('/updateClanMembers', data).then((resp) => {
+        console.log('resp:', resp);
         return resp.data;
       });
       return promise;

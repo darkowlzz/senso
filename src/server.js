@@ -5,6 +5,21 @@ let express = require('express'),
     mongoose = require('mongoose'),
     _       = require('lodash');
 
+const CONFLICT = 'senso-update-conflict';
+
+function arraysEqual (a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+
+  for (let i = 0; i < a.length; ++i) {
+    if (! _.isEqual(a[i], b[i])) return false;
+  }
+  return true;
+}
+
+/** ------------------------- **/
+
 let port = process.env.PORT || 3000;
 
 let uristring = process.env.MONGODB_URI || 'mongodb://localhost/senso';
@@ -33,6 +48,9 @@ router.get('/', function (req, res) {
   res.render('/index.html');
 });
 
+
+/** -----------------------**/
+
 // Create a new clan
 router.post('/newClan', function (req, res) {
   let data = req.body;
@@ -45,8 +63,10 @@ router.post('/newClan', function (req, res) {
   aClan.save(function (err, obj) {
     if (err) {
       console.log('Error on save');
+      res.json({ error: err });
     } else {
       console.log('Saved!', obj);
+      res.json({ success: true });
     }
   });
 });
@@ -55,14 +75,21 @@ router.post('/newClan', function (req, res) {
 router.post('/updateClanMembers', function (req, res) {
   let data = req.body;
   Clan.findOne({ name: data.name }, function (err, rObj) {
-    rObj.members = data.members;
-    rObj.save(function (err, result) {
-      if (err) {
-        console.log('failed to update');
-      } else {
-        console.log('saved successfully');
-      }
-    });
+    if (! arraysEqual(data.initMembers, rObj.members)) {
+      console.log('data not the same');
+      res.json({ success: false, reason: CONFLICT, newData: rObj.members});
+    } else {
+      rObj.members = data.members;
+      rObj.save(function (err, result) {
+        if (err) {
+          console.log('failed to update');
+          res.json({ error: err });
+        } else {
+          console.log('saved successfully');
+          res.json({ success: true });
+        }
+      });
+    }
   });
 });
 
@@ -76,8 +103,10 @@ router.post('/updateWarMembers', function (req, res) {
     rObj.save(function (err, result) {
       if (err) {
         console.log('failed to update war members');
+        res.json({ error: err });
       } else {
         console.log('saved war members');
+        res.json({ success: true });
       }
     });
   });

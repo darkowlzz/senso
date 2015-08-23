@@ -1,7 +1,10 @@
 import { MainController } from './controllers/MainController';
 import { MembersController } from './controllers/MembersController';
 import { WarController } from './controllers/WarController';
+
 import { DatabaseService } from './services/Database';
+
+import { CONST } from './constants';
 
 const moduleName = 'Senso';
 
@@ -11,6 +14,7 @@ angular
   .controller('MembersCtrl', MembersController)
   .controller('WarCtrl', WarController)
   .factory('database', DatabaseService)
+  .constant('CONST', CONST)
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/members');

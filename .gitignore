@@ -5,3 +5,4 @@ dist
 *.swo
 bower_components
 server-compiled.js
+npm-debug.log

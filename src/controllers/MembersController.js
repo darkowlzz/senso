@@ -1,17 +1,19 @@
 class MembersController {
-  constructor($rootScope, database, $mdDialog) {
+  constructor($rootScope, database, $mdDialog, CONST) {
     this.rootScope = $rootScope;
     this.database = database;
     this.mdDialog = $mdDialog;
+    this.CONST = CONST;
 
     this.newMember = '';
     this.sortable = false;
     this.delete = false;
     this.members = [];
-    this.foo = 'fooooo';
+    this.initMembers = [];
 
     this.database.getClanData().then((data) => {
       this.members = data.members;
+      this.initMembers = _.cloneDeep(data.members);
     });
   }
   
@@ -31,12 +33,37 @@ class MembersController {
     this.newMember = '';
   }
 
-  applyChanges () {
-    this.database.updateClanMembers( { name: this.rootScope.clanName,
-                                       members: this.members } ).then(() => {
-                                         console.log('update successful');
-                                         // change loading status
-                                      });
+  applyChanges (ev) {
+    this.database.updateClanMembers( 
+        { name: this.rootScope.clanName,
+          initMembers: this.initMembers,
+          members: this.members } )
+        .then((r) => {
+          // check if there is an update error
+          if (r.error) {
+            console.log('Error:', r.error);
+          } else if (! r.success) {
+            // check the reason for failure
+            if (r.reason == this.CONST.updateConflict) {
+              let confirm = this.mdDialog.confirm()
+                  .title('Conflict while saving')
+                  .content('There was a conflict while saving the changes.')
+                  .ariaLabel('Save Conflict')
+                  .ok('Update to latest')
+                  .cancel('Cancel')
+                  .targetEvent(ev);
+              this.mdDialog.show(confirm).then(() => {
+                this.members = r.newData;
+                this.initMembers = _.cloneDeep(r.newData);
+              }, () => {
+                console.log('update cancelled');
+              });
+            }
+          } else {
+          this.initMembers = _.cloneDeep(this.members);
+          // change loading status
+          }
+        });
   }
 
   moveUp (item) {
@@ -48,7 +75,6 @@ class MembersController {
   }
 
   openEditor (ev, item) {
-    console.log(item.name);
     this.mdDialog.show({
       controller: EditorController,
       templateUrl: 'templates/memberEdit.html',
@@ -65,7 +91,6 @@ class MembersController {
   }
 
   deleteMember (ev, item) {
-    console.log('delete', item.name);
     let confirm = this.mdDialog.confirm()
       .title('Confirm Delete?')
       .content('Are you sure you want to delete ' + item.name + ' from the clan?')
@@ -77,7 +102,6 @@ class MembersController {
       _.remove(this.members, (mem) => {
         return mem.name == item.name;
       });
-      console.log(this.members)
     }, () => {
       console.log('cancelled');
     })
@@ -85,7 +109,7 @@ class MembersController {
 
 }
 
-MembersController.$inject = ['$rootScope', 'database', '$mdDialog'];
+MembersController.$inject = ['$rootScope', 'database', '$mdDialog', 'CONST'];
 
 
 function EditorController ($scope, $mdDialog, player) {
