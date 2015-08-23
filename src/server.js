@@ -96,19 +96,34 @@ router.post('/updateClanMembers', function (req, res) {
 // Update war members
 router.post('/updateWarMembers', function (req, res) {
   let data = req.body;
-  console.log('war members on server', data);
   Clan.findOne({ name: data.name }, function (err, rObj) {
-    rObj.warMembers = data.warMembers;
-    console.log('obj after saving would be', rObj);
-    rObj.save(function (err, result) {
-      if (err) {
-        console.log('failed to update war members');
-        res.json({ error: err });
-      } else {
-        console.log('saved war members');
-        res.json({ success: true });
-      }
-    });
+    if (! arraysEqual(data.initWarMembers, rObj.warMembers)) {
+      console.log('data not the same');
+      // get war read members too
+      Clan.findOne({ name: 'Age of Empires'}).exec(function (err, result) {
+        let warReadyMembers = _.filter(result.members, (member) => {
+          return member.war === true;
+        });
+        // return both war members and war ready members
+        // NOTE: make it DRY
+        res.json({ success: false, reason: CONFLICT,
+                   newData: { warMembers: rObj.warMembers,
+                              warReadyMembers: warReadyMembers }
+                  });
+      });
+
+    } else {
+      rObj.warMembers = data.warMembers;
+      rObj.save(function (err, result) {
+        if (err) {
+          console.log('failed to update war members');
+          res.json({ error: err });
+        } else {
+          console.log('saved war members');
+          res.json({ success: true });
+        }
+      });
+    }
   });
 });
 

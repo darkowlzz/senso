@@ -60,8 +60,8 @@ class MembersController {
               });
             }
           } else {
-          this.initMembers = _.cloneDeep(this.members);
-          // change loading status
+            this.initMembers = _.cloneDeep(this.members);
+            // change loading status
           }
         });
   }

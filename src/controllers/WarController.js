@@ -1,39 +1,68 @@
 class WarController {
-  constructor($rootScope, database) {
+  constructor($rootScope, database, $mdDialog, CONST) {
     this.rootScope = $rootScope;
     this.database = database;
+    this.mdDialog = $mdDialog;
+    this.CONST = CONST;
 
     this.members = [];
     this.warMembers = [];
+    this.initWarMembers = [];
 
     this.database.getWarReadyMembers().then((warReady) => {
       this.database.getWarMembers().then((warMembers) => {
-        if (warMembers) {
-          this.members = _.reject(warReady, (wr) => {
-            //return _.includes(warMembers, wr);
-            for (let i=0; i < warMembers.length; i++) {
-              if (warMembers[i].name == wr.name) {
-                return true;
-              }
-            }
-            return false;
-          });
-          this.warMembers = warMembers;
-        } else {
-          this.members = warReady;
-        }
-      })
-      //this.members = data;
+        this.separateWarReadyAndSelected(warReady, warMembers);
+      });
     });
   }
 
-  applyChanges () {
-    this.database.updateWarMembers( { name: this.rootScope.clanName,
-                                       warMembers: this.warMembers } )
-                                       .then(() => {
-                                         console.log('update successful');
-                                         // change loading status
-                                      });
+  separateWarReadyAndSelected (warReady, warMembers) {
+    if (warMembers) {
+      this.members = _.reject(warReady, (wr) => {
+        for (let i=0; i < warMembers.length; i++) {
+          if (warMembers[i].name == wr.name) {
+            return true;
+          }
+        }
+        return false;
+      });
+      this.warMembers = warMembers;
+      this.initWarMembers = _.cloneDeep(warMembers);
+    } else {
+      this.members = warReady;
+    }
+  }
+
+  applyChanges (ev) {
+    this.database.updateWarMembers(
+        { name: this.rootScope.clanName,
+          initWarMembers: this.initWarMembers,
+          warMembers: this.warMembers } )
+          .then((r) => {
+            if (r.error) {
+              console.log('Error:', r.error);
+            } else if (! r.success) {
+              // check the reason for failure
+              if (r.reason == this.CONST.updateConflict) {
+                let confirm = this.mdDialog.confirm()
+                    .title('Conflict while saving')
+                    .content('There was a conflict while saving the changes.')
+                    .ariaLabel('Save Conflict')
+                    .ok('Update to latest')
+                    .cancel('Cancel')
+                    .targetEvent(ev);
+                this.mdDialog.show(confirm).then(() => {
+                  this.separateWarReadyAndSelected(r.newData.warReadyMembers,
+                                                   r.newData.warMembers);
+                }, () => {
+                  console.log('update cancelled');
+                });
+              }
+            } else {
+              this.initWarMembers = _.cloneDeep(this.warMembers);
+              // change loading status
+            }
+          });
   }
 
   addToWar (item) {
@@ -51,6 +80,6 @@ class WarController {
   }
 }
 
-WarController.$inject = ['$rootScope', 'database'];
+WarController.$inject = ['$rootScope', 'database', '$mdDialog', 'CONST'];
 
 export { WarController };

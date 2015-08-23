@@ -11,7 +11,6 @@ function DatabaseService ($http) {
 
     updateClanMembers: function updateClanMembers (data) {
       let promise = $http.post('/updateClanMembers', data).then((resp) => {
-        console.log('resp:', resp);
         return resp.data;
       });
       return promise;
@@ -34,7 +33,6 @@ function DatabaseService ($http) {
     },
 
     updateWarMembers: function updateWarMembers (data) {
-      console.log('updating war members with', data);
       let promise = $http.post('/updateWarMembers', data).then((resp) => {
         return resp.data;
       });
