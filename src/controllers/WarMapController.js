@@ -9,6 +9,7 @@ class WarMapController {
     this.warMembers = [];
     this.warMap = [];
     this.initWarMap = [];
+    this.unsavedChanges = false;
 
     this.database.getClanData().then((data) => {
       if (! data.inWar) {
@@ -22,6 +23,10 @@ class WarMapController {
       }
     });
 
+  }
+
+  changed () {
+    this.unsavedChanges = true;
   }
 
   applyChanges (ev) {
@@ -51,6 +56,7 @@ class WarMapController {
             } else {
               this.initWarMap = _.cloneDeep(this.warMap);
               this.toast.savedToast();
+              this.unsavedChanges = false;
               // change loading status
             }
           });
@@ -67,6 +73,7 @@ class WarMapController {
       locals: { target: item, players: this.warMembers }
     })
     .then((answer) => {
+      this.changed();
       // done
     }, () => {
       // cancelled

@@ -10,6 +10,7 @@ class WarController {
     this.members = [];
     this.warMembers = [];
     this.initWarMembers = [];
+    this.unsavedChanges = false;
 
     this.database.getClanData().then((data) => {
       if (data.inWar) {
@@ -22,6 +23,10 @@ class WarController {
         this.separateWarReadyAndSelected(warReady, warMembers);
       });
     });
+  }
+
+  changed () {
+    this.unsavedChanges = true;
   }
 
   separateWarReadyAndSelected (warReady, warMembers) {
@@ -69,6 +74,7 @@ class WarController {
             } else {
               this.initWarMembers = _.cloneDeep(this.warMembers);
               this.toast.savedToast();
+              this.unsavedChanges = false;
               // change loading status
             }
           });
@@ -79,6 +85,7 @@ class WarController {
     _.remove(this.members, (mem) => {
       return mem.name == item.name;
     });
+    this.changed();
   }
 
   removeFromWar (item) {
@@ -86,6 +93,7 @@ class WarController {
     _.remove(this.warMembers, (mem) => {
       return mem.name == item.name;
     });
+    this.changed();
   }
 
   startWar () {

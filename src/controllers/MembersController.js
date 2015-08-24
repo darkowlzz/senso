@@ -11,6 +11,7 @@ class MembersController {
     this.delete = false;
     this.members = [];
     this.initMembers = [];
+    this.unsavedChanges = false;
 
     this.database.getClanData().then((data) => {
       this.members = data.members;
@@ -26,12 +27,17 @@ class MembersController {
     }
   }
 
+  changed () {
+    this.unsavedChanges = true;
+  }
+
   addToMembers () {
     if (this.newMember == '') {
       return;
     }
     this.members.push({name: this.newMember, note: '', war: false});
     this.newMember = '';
+    this.changed();
   }
 
   applyChanges (ev) {
@@ -63,17 +69,19 @@ class MembersController {
           } else {
             this.initMembers = _.cloneDeep(this.members);
             this.toast.savedToast();
-            // change loading status
+            this.unsavedChanges = false;
           }
         });
   }
 
   moveUp (item) {
     this.members.moveUp(item);
+    this.changed();
   }
 
   moveDown (item) {
     this.members.moveDown(item);
+    this.changed();
   }
 
   openEditor (ev, item) {
@@ -86,6 +94,7 @@ class MembersController {
       locals: { player: item }
     })
     .then((answer) => {
+      this.changed();
       // done
     }, () => {
       // cancelled
@@ -104,6 +113,7 @@ class MembersController {
       _.remove(this.members, (mem) => {
         return mem.name == item.name;
       });
+      this.changed();
     }, () => {
       console.log('cancelled');
     })
