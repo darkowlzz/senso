@@ -4,6 +4,7 @@ import { WarController } from './controllers/WarController';
 import { WarMapController } from './controllers/WarMapController';
 
 import { DatabaseService } from './services/Database';
+import { ToastService } from './services/Toast';
 
 import { CONST } from './constants';
 
@@ -16,6 +17,7 @@ angular
   .controller('WarCtrl', WarController)
   .controller('WarMapCtrl', WarMapController)
   .factory('database', DatabaseService)
+  .factory('toast', ToastService)
   .constant('CONST', CONST)
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {

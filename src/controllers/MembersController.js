@@ -1,8 +1,9 @@
 class MembersController {
-  constructor($rootScope, database, $mdDialog, CONST) {
+  constructor($rootScope, database, $mdDialog, toast, CONST) {
     this.rootScope = $rootScope;
     this.database = database;
     this.mdDialog = $mdDialog;
+    this.toast = toast;
     this.CONST = CONST;
 
     this.newMember = '';
@@ -61,6 +62,7 @@ class MembersController {
             }
           } else {
             this.initMembers = _.cloneDeep(this.members);
+            this.toast.savedToast();
             // change loading status
           }
         });
@@ -109,7 +111,8 @@ class MembersController {
 
 }
 
-MembersController.$inject = ['$rootScope', 'database', '$mdDialog', 'CONST'];
+MembersController.$inject = ['$rootScope', 'database', '$mdDialog',
+                             'toast', 'CONST'];
 
 
 function EditorController ($scope, $mdDialog, player) {

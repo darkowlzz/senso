@@ -62,4 +62,6 @@ function DatabaseService ($http) {
   }
 }
 
+DatabaseService.$inject = ['$http'];
+
 export { DatabaseService };

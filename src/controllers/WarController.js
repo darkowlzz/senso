@@ -1,10 +1,11 @@
 class WarController {
-  constructor($rootScope, database, $mdDialog, CONST, $state) {
+  constructor($rootScope, database, $mdDialog, CONST, $state, toast) {
     this.rootScope = $rootScope;
     this.database = database;
     this.mdDialog = $mdDialog;
     this.CONST = CONST;
     this.state = $state;
+    this.toast = toast;
 
     this.members = [];
     this.warMembers = [];
@@ -67,6 +68,7 @@ class WarController {
               }
             } else {
               this.initWarMembers = _.cloneDeep(this.warMembers);
+              this.toast.savedToast();
               // change loading status
             }
           });
@@ -100,6 +102,6 @@ class WarController {
 }
 
 WarController.$inject = ['$rootScope', 'database', '$mdDialog',
-                         'CONST', '$state'];
+                         'CONST', '$state', 'toast'];
 
 export { WarController };

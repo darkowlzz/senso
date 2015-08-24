@@ -1,9 +1,10 @@
 class WarMapController {
-  constructor($mdDialog, $state, database, CONST) {
+  constructor($mdDialog, $state, database, CONST, toast) {
     this.mdDialog = $mdDialog;
     this.state = $state;
     this.database = database;
     this.CONST = CONST;
+    this.toast = toast
 
     this.warMembers = [];
     this.warMap = [];
@@ -49,6 +50,7 @@ class WarMapController {
               }
             } else {
               this.initWarMap = _.cloneDeep(this.warMap);
+              this.toast.savedToast();
               // change loading status
             }
           });
@@ -84,7 +86,8 @@ class WarMapController {
   }
 }
 
-WarMapController.$inject = ['$mdDialog', '$state', 'database', 'CONST'];
+WarMapController.$inject = ['$mdDialog', '$state', 'database',
+                            'CONST', 'toast'];
 
 
 function EditorController ($scope, $mdDialog, target, players) {
