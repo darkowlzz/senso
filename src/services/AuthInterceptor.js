@@ -1,4 +1,4 @@
-function AuthInterceptorService ($rootScope, $q, localStorageService) {
+function AuthInterceptorService ($q, localStorageService) {
   return {
     request: function (config) {
       // add authorization token to non-login requests
@@ -21,6 +21,6 @@ function AuthInterceptorService ($rootScope, $q, localStorageService) {
   };
 };
 
-AuthInterceptorService.$inject = ['$rootScope', '$q', 'localStorageService'];
+AuthInterceptorService.$inject = ['$q', 'localStorageService'];
 
 export { AuthInterceptorService };

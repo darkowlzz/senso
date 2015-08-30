@@ -1,8 +1,14 @@
 class CreateProfileController {
-  constructor($rootScope, database, $state) {
+  constructor($rootScope, database, $state, Session) {
     this.rootScope = $rootScope;
     this.database = database;
     this.state = $state;
+    this.Session = Session;
+
+    // Don't render this page without access token
+    if (! this.rootScope.user.accessToken) {
+      $state.go('login');
+    }
 
     this.name = this.rootScope.user.username;
     this.email = this.rootScope.user.email;
@@ -17,8 +23,7 @@ class CreateProfileController {
     }).then((r) => {
       if (!! r.success) {
         console.log('user created successfully - directing to dashboard');
-        //this.rootScope.user.name = this.rootScope.loginData.name;
-        //this.rootScope.user.signedIn = true;
+        this.Session.role = r.role;
         this.state.go('dashboard');
       } else {
         console.log('error:', r);
@@ -29,6 +34,6 @@ class CreateProfileController {
   }
 }
 
-CreateProfileController.$inject = ['$rootScope', 'database', '$state'];
+CreateProfileController.$inject = ['$rootScope', 'database', '$state', 'Session'];
 
 export { CreateProfileController };

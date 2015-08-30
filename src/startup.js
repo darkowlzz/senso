@@ -1,5 +1,7 @@
 function startUp ($rootScope, Auth, AUTH_EVENTS, Session, $state) {
 
+  $rootScope.user = {};
+
   if (!! Session.sessionData.signedIn) {
     console.log('found to be already signed in');
     $rootScope.user = Session.sessionData;

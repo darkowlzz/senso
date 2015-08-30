@@ -29,7 +29,7 @@ function config ($stateProvider, $urlRouterProvider, USER_ROLES,
       controller: 'DashboardCtrl',
       controllerAs: 'dashCtrl',
       data: {
-        authorizedRoles: [USER_ROLES.user]
+        authorizedRoles: [USER_ROLES.user, USER_ROLES.member, USER_ROLES.leader]
       }
     })
     .state('members', {
@@ -38,7 +38,7 @@ function config ($stateProvider, $urlRouterProvider, USER_ROLES,
       controller: 'MembersCtrl',
       controllerAs: 'mem',
       data: {
-        authorizedRoles: [USER_ROLES.user]
+        authorizedRoles: [USER_ROLES.member, USER_ROLES.leader]
       }
     })
     .state('war', {
@@ -47,7 +47,7 @@ function config ($stateProvider, $urlRouterProvider, USER_ROLES,
       controller: 'WarCtrl',
       controllerAs: 'war',
       data: {
-        authorizedRoles: [USER_ROLES.user]
+        authorizedRoles: [USER_ROLES.member, USER_ROLES.leader]
       }
     })
     .state('warmap', {
@@ -56,7 +56,7 @@ function config ($stateProvider, $urlRouterProvider, USER_ROLES,
       controller: 'WarMapCtrl',
       controllerAs: 'warMap',
       data: {
-        authorizedRoles: [USER_ROLES.user]
+        authorizedRoles: [USER_ROLES.member, USER_ROLES.leader]
       }
     });
 }

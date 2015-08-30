@@ -1,9 +1,9 @@
 class LoginController {
-  constructor() {
-  
+  constructor($state) {
+    //console.log($state.current.data.authorizedRoles);
   }
 }
 
-LoginController.$inject = [];
+LoginController.$inject = ['$state'];
 
 export { LoginController };

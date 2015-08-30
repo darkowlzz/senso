@@ -23,9 +23,10 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
               };
               //$window.sessionStorage.token = $rootScope.loginData.accessToken;
               database.login(loginData).then((r) => {
+                let role = r.role || null;
                 // use the received token as the access token for further req
                 Session.create(loginData.name, loginData.email,
-                               loginData.loginService, r.token);
+                               loginData.loginService, r.token, role);
                 $rootScope.user = Session.sessionData;
                 if (r.success) {
                   $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
@@ -58,8 +59,7 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
           if (resp.status === 'connected') {
             FB.logout((response) => {
               Session.destroy();
-              $rootScope.user = $rootScope.user;
-              $rootScope.user.signedIn = Session.sessionData.signedIn;
+              $rootScope.user = {};
               $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             });
           }
