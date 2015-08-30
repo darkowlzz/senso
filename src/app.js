@@ -2,44 +2,40 @@ import { MainController } from './controllers/MainController';
 import { MembersController } from './controllers/MembersController';
 import { WarController } from './controllers/WarController';
 import { WarMapController } from './controllers/WarMapController';
+import { LoginController } from './controllers/LoginController';
+import { CreateProfileController } from './controllers/CreateProfileController';
+import { DashboardController } from './controllers/DashboardController';
 
 import { DatabaseService } from './services/Database';
 import { ToastService } from './services/Toast';
+import { SessionService } from './services/Session';
+import { AuthService } from './services/Auth';
+import { AuthInterceptorService } from './services/AuthInterceptor';
 
-import { CONST } from './constants';
+import { config } from './config';
+import { startUp } from './startup';
+
+import { DB_EVENTS, USER_ROLES, AUTH_EVENTS, API_SERVER } from './constants';
 
 const moduleName = 'Senso';
 
 angular
-  .module(moduleName, ['ngMaterial', 'ngMdIcons', 'ui.router'])
+  .module(moduleName, ['ngMaterial', 'ngMdIcons', 'ui.router', 'LocalStorageModule'])
   .controller('MainCtrl', MainController)
   .controller('MembersCtrl', MembersController)
   .controller('WarCtrl', WarController)
   .controller('WarMapCtrl', WarMapController)
+  .controller('LoginCtrl', LoginController)
+  .controller('CreateProfileCtrl', CreateProfileController)
+  .controller('DashboardCtrl', DashboardController)
   .factory('database', DatabaseService)
   .factory('toast', ToastService)
-  .constant('CONST', CONST)
-  .config(['$stateProvider', '$urlRouterProvider',
-    function ($stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise('/members');
-
-      $stateProvider
-        .state('members', {
-          url: '/members',
-          templateUrl: 'templates/members.html',
-          controller: 'MembersCtrl',
-          controllerAs: 'mem'
-        })
-        .state('war', {
-          url: '/war',
-          templateUrl: 'templates/war.html',
-          controller: 'WarCtrl',
-          controllerAs: 'war'
-        })
-        .state('warmap', {
-          url: '/warmap',
-          templateUrl: 'templates/warMap.html',
-          controller: 'WarMapCtrl',
-          controllerAs: 'warMap'
-        });
-    }]);
+  .factory('Auth', AuthService)
+  .factory('Session', SessionService)
+  .factory('authInterceptor', AuthInterceptorService)
+  .constant('DB_EVENTS', DB_EVENTS)
+  .constant('USER_ROLES', USER_ROLES)
+  .constant('AUTH_EVENTS', AUTH_EVENTS)
+  .constant('API_SERVER', API_SERVER)
+  .config(config)
+  .run(startUp);

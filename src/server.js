@@ -20,7 +20,7 @@ function arraysEqual (a, b) {
 
 /** ------------------------- **/
 
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 8000;
 
 let uristring = process.env.MONGODB_URI || 'mongodb://localhost/senso';
 

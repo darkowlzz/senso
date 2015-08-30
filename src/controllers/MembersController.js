@@ -1,10 +1,10 @@
 class MembersController {
-  constructor($rootScope, database, $mdDialog, toast, CONST) {
+  constructor($rootScope, database, $mdDialog, toast, DB_EVENTS) {
     this.rootScope = $rootScope;
     this.database = database;
     this.mdDialog = $mdDialog;
     this.toast = toast;
-    this.CONST = CONST;
+    this.DB_EVENTS = DB_EVENTS;
 
     this.newMember = '';
     this.sortable = false;
@@ -13,10 +13,12 @@ class MembersController {
     this.initMembers = [];
     this.unsavedChanges = false;
 
+    /*
     this.database.getClanData().then((data) => {
       this.members = data.members;
       this.initMembers = _.cloneDeep(data.members);
     });
+    */
   }
   
   getColor (war) {
@@ -51,7 +53,7 @@ class MembersController {
             console.log('Error:', r.error);
           } else if (! r.success) {
             // check the reason for failure
-            if (r.reason == this.CONST.updateConflict) {
+            if (r.reason == this.DB_EVENTS.updateConflict) {
               let confirm = this.mdDialog.confirm()
                   .title('Conflict while saving')
                   .content('There was a conflict while saving the changes.')
@@ -122,7 +124,7 @@ class MembersController {
 }
 
 MembersController.$inject = ['$rootScope', 'database', '$mdDialog',
-                             'toast', 'CONST'];
+                             'toast', 'DB_EVENTS'];
 
 
 function EditorController ($scope, $mdDialog, player) {

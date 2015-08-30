@@ -1,9 +1,9 @@
 class WarController {
-  constructor($rootScope, database, $mdDialog, CONST, $state, toast) {
+  constructor($rootScope, database, $mdDialog, DB_EVENTS, $state, toast) {
     this.rootScope = $rootScope;
     this.database = database;
     this.mdDialog = $mdDialog;
-    this.CONST = CONST;
+    this.DB_EVENTS = DB_EVENTS;
     this.state = $state;
     this.toast = toast;
 
@@ -56,7 +56,7 @@ class WarController {
               console.log('Error:', r.error);
             } else if (! r.success) {
               // check the reason for failure
-              if (r.reason == this.CONST.updateConflict) {
+              if (r.reason == this.DB_EVENTS.updateConflict) {
                 let confirm = this.mdDialog.confirm()
                     .title('Conflict while saving')
                     .content('There was a conflict while saving the changes.')
@@ -110,6 +110,6 @@ class WarController {
 }
 
 WarController.$inject = ['$rootScope', 'database', '$mdDialog',
-                         'CONST', '$state', 'toast'];
+                         'DB_EVENTS', '$state', 'toast'];
 
 export { WarController };

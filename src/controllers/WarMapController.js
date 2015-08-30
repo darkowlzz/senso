@@ -1,9 +1,9 @@
 class WarMapController {
-  constructor($mdDialog, $state, database, CONST, toast) {
+  constructor($mdDialog, $state, database, DB_EVENTS, toast) {
     this.mdDialog = $mdDialog;
     this.state = $state;
     this.database = database;
-    this.CONST = CONST;
+    this.DB_EVENTS = DB_EVENTS;
     this.toast = toast
 
     this.warMembers = [];
@@ -38,7 +38,7 @@ class WarMapController {
               console.log('Error:', r.error);
             } else if (! r.success) {
               // check the reason for failure
-              if (r.reason == this.CONST.updateConflict) {
+              if (r.reason == this.DB_EVENTS.updateConflict) {
                 let confirm = this.mdDialog.confirm()
                     .title('Conflict while saving')
                     .content('There was a conflict while saving the changes.')
@@ -94,7 +94,7 @@ class WarMapController {
 }
 
 WarMapController.$inject = ['$mdDialog', '$state', 'database',
-                            'CONST', 'toast'];
+                            'DB_EVENTS', 'toast'];
 
 
 function EditorController ($scope, $mdDialog, target, players) {
