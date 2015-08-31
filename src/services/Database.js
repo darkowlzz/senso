@@ -1,4 +1,4 @@
-function DatabaseService ($http, API_SERVER) {
+function DatabaseService ($rootScope, $http, API_SERVER) {
 
   function requestWrapper (rqst) {
     let promise = $http(rqst).then((resp) => {
@@ -38,6 +38,7 @@ function DatabaseService ($http, API_SERVER) {
     },
 
     createClan: function createClan (clanData) {
+      clanData.leader = $rootScope.user.userID;
       let req = {
         method: 'POST',
         url: API_SERVER + '/api/v1/clan',
@@ -214,6 +215,6 @@ function DatabaseService ($http, API_SERVER) {
   }
 }
 
-DatabaseService.$inject = ['$http', 'API_SERVER'];
+DatabaseService.$inject = ['$rootScope', '$http', 'API_SERVER'];
 
 export { DatabaseService };

@@ -1,7 +1,7 @@
 <md-list-item ng-repeat="item in mem.members" 
-  class="{{mem.getColor(item.war)}}" layout-margin layout-padding>
+  class="{{mem.getColor(item.inWar)}}" layout-margin layout-padding>
   <ng-md-icon icon="person" size="20"></ng-md-icon>
-  <p>{{ item.name }} </p>
+  <p>{{ item.nick }} </p>
 
   <div ng-show="mem.sortable">
     <md-button title="Move up" aria-label="move up"

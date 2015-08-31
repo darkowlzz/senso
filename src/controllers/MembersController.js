@@ -15,12 +15,11 @@ class MembersController {
     this.initMembers = [];
     this.unsavedChanges = false;
 
-    /*
-    this.database.getClanData().then((data) => {
-      this.members = data.members;
+    this.database.getClanMembers(this.rootScope.user.clanID).then((data) => {
+      console.log('got data', data);
+      this.members = data;
       this.initMembers = _.cloneDeep(data.members);
     });
-    */
   }
   
   getColor (war) {
@@ -39,7 +38,7 @@ class MembersController {
     if (this.newMember == '') {
       return;
     }
-    this.members.push({name: this.newMember, note: '', war: false});
+    this.members.push({name: this.newMember, note: '', inWar: false});
     this.newMember = '';
     this.changed();
   }
