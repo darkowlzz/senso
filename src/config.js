@@ -32,6 +32,15 @@ function config ($stateProvider, $urlRouterProvider, USER_ROLES,
         authorizedRoles: [USER_ROLES.user, USER_ROLES.member, USER_ROLES.leader]
       }
     })
+    .state('createClan', {
+      url: '/createClan',
+      templateUrl: 'templates/createClan.html',
+      controller: 'CreateClanCtrl',
+      controllerAs: 'cc',
+      data: {
+        authorizedRoles: [USER_ROLES.user]
+      }
+    })
     .state('members', {
       url: '/members',
       templateUrl: 'templates/members.html',

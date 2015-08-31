@@ -23,7 +23,8 @@ class CreateProfileController {
     }).then((r) => {
       if (!! r.success) {
         console.log('user created successfully - directing to dashboard');
-        this.Session.role = r.role;
+        this.Session.role = r.user.role;
+        this.Session.userID = r.user.userID;
         this.state.go('dashboard');
       } else {
         console.log('error:', r);

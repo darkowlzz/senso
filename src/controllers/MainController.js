@@ -4,8 +4,6 @@ class MainController {
     this.mdSidenav = $mdSidenav;
     this.sideNavId = 'left'
 
-    $rootScope.clanName = 'Age of Empires';
-
     $rootScope.$on('$stateChangeStart', () => {
       this.mdSidenav(this.sideNavId).close();
     })

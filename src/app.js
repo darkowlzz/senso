@@ -5,6 +5,7 @@ import { WarMapController } from './controllers/WarMapController';
 import { LoginController } from './controllers/LoginController';
 import { CreateProfileController } from './controllers/CreateProfileController';
 import { DashboardController } from './controllers/DashboardController';
+import { CreateClanController } from './controllers/CreateClanController';
 
 import { DatabaseService } from './services/Database';
 import { ToastService } from './services/Toast';
@@ -28,6 +29,7 @@ angular
   .controller('LoginCtrl', LoginController)
   .controller('CreateProfileCtrl', CreateProfileController)
   .controller('DashboardCtrl', DashboardController)
+  .controller('CreateClanCtrl', CreateClanController)
   .factory('database', DatabaseService)
   .factory('toast', ToastService)
   .factory('Auth', AuthService)

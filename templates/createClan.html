@@ -1,0 +1,53 @@
+<div layout="column" flex>
+
+  <div flex class="md-padding">
+    <div layout="row" layout-align="center center">
+      <h3>Create Clan</h3>
+    </div>
+
+    <div layout-padding layout="row" layout-sm="column">
+      <md-input-container flex>
+        <label>Clan Name</label>
+        <input ng-model="cc.name" required>
+      </md-input-container>
+      <md-input-container flex>
+        <label>Clan ID (with #)</label>
+        <input ng-model="cc.clanID" required>
+      </md-input-container>
+      <md-input-container flex>
+        <label>Clan Level</label>
+        <input ng-model="cc.level" type="number">
+      </md-input-container>
+    </div>
+    <div layout-padding layout="row" layout-sm="column">
+      <md-input-container flex>
+        <label>Clan Type</label>
+        <md-select ng-model="cc.clanType">
+          <md-option ng-repeat="type in cc.typeList" value="{{type}}">{{type}}</md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container flex>
+        <label>Clan Location</label>
+        <md-select ng-model="cc.location">
+          <md-option ng-repeat="location in cc.locationList" value="{{location}}">{{location}}</md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container flex>
+        <label>War Frequency</label>
+        <md-select ng-model="cc.frequency">
+          <md-option ng-repeat="war in cc.frequencyList" value="{{war}}">{{war}}</md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+    <div layout-padding layout="row" layout-sm="column">
+      <md-input-container flex>
+        <label>Clan Description</label>
+        <textarea ng-model="cc.description" columns="1" md-maxlength="150"></textarea>
+      </md-input-container>
+    </div>
+  </div>
+
+  <div layout="row" layout-align="center center">
+    <md-button class="md-raised" ng-click="cc.submitData()">Create</md-button>
+  </div>
+</div>

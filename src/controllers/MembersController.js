@@ -1,5 +1,7 @@
 class MembersController {
   constructor($rootScope, database, $mdDialog, toast, DB_EVENTS) {
+    console.log('Loading Members');
+
     this.rootScope = $rootScope;
     this.database = database;
     this.mdDialog = $mdDialog;

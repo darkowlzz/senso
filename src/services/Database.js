@@ -28,6 +28,15 @@ function DatabaseService ($http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    updateUser: function updateUser (userData) {
+      let req = {
+        method: 'PUT',
+        url: API_SERVER + '/api/v1/user/' + userData.userID,
+        data: userData
+      }
+      return requestWrapper(req);
+    },
+
     createClan: function createClan (clanData) {
       let req = {
         method: 'POST',
@@ -93,7 +102,8 @@ function DatabaseService ($http, API_SERVER) {
     updateClanDetails: function updateClanDetails (putData) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + putData.clanID
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID,
+        data: putData
       }
       return requestWrapper(req);
     },
@@ -101,7 +111,8 @@ function DatabaseService ($http, API_SERVER) {
     updateClanMembers: function updateClanMembers (putData) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/members/update'
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/members/update',
+        data: putData
       }
       return requestWrapper(req);
     },
@@ -110,7 +121,8 @@ function DatabaseService ($http, API_SERVER) {
       let req = {
         method: 'PUT',
         url: API_SERVER + '/api/v1/clan/' + putData.clanID +
-             '/war/members/update'
+             '/war/members/update',
+        data: putData
       }
       return requestWrapper(req);
     },
@@ -118,7 +130,8 @@ function DatabaseService ($http, API_SERVER) {
     updateWarMap: function updateWarMap (putData) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/warmap/update'
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/warmap/update',
+        data: putData
       }
       return requestWrapper(req);
     },

@@ -23,14 +23,18 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
               };
               //$window.sessionStorage.token = $rootScope.loginData.accessToken;
               database.login(loginData).then((r) => {
-                let role = r.role || null;
+                console.log(r);
                 // use the received token as the access token for further req
-                Session.create(loginData.name, loginData.email,
-                               loginData.loginService, r.token, role);
-                $rootScope.user = Session.sessionData;
-                if (r.success) {
+                if (!! r.success) {
+                  Session.create(r.user.name, r.user.email,
+                               loginData.loginService, r.token, r.user.role,
+                               r.user.userID, r.user.clanID, r.user.clanName);
+                  $rootScope.user = Session.sessionData;
                   $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 } else {
+                  Session.create(loginData.name, loginData.email,
+                                 loginData.loginService, r.token);
+                  $rootScope.user = Session.sessionData;
                   $rootScope.$broadcast('CREATE_PROFILE');
                 }
               }, (err) => {

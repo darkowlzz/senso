@@ -9,14 +9,25 @@
       <p>Hola {{user.username}}!</p>
     </div>
 
-    <div layout="row" layout-align="center center">
-      <md-button class="md-raised md-primary" ng-click="">Join a clan</md-button>
+    <div ng-hide="!! user.clanID">
+      <div layout="row" layout-align="center center">
+        <md-button class="md-raised md-primary" ng-click="dashCtrl.joinClan()">Join a clan</md-button>
+      </div>
+
+      <div layout="row" layout-align="center center">
+        <md-button class="md-raised md-primary" ng-click="dashCtrl.createClan()">Create a clan</md-button>
+      </div>
     </div>
 
-    <div layout="row" layout-align="center center">
-      <md-button class="md-raised md-primary" ng-click="">Create a clan</md-button>
-    </div>
+    <div ng-show="!! user.clanID">
+      <div layout="row" layout-align="center center">
+        <md-button class="md-raised md-primary" ng-click="dashCtrl.gotoMembers()">Clan Members</md-button>
+      </div>
 
+      <div layout="row" layout-align="center center">
+        <md-button class="md-raised md-primary" ng-click="">Clan War</md-button>
+      </div>
+    </div>
 
   </div>
 </div>
