@@ -67,6 +67,10 @@ function config ($stateProvider, $urlRouterProvider, USER_ROLES,
       data: {
         authorizedRoles: [USER_ROLES.member, USER_ROLES.leader]
       }
+    })
+    .state('oops', {
+      url: '/oops',
+      templateUrl: 'templates/oops.html'
     });
 }
 

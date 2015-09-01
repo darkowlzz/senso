@@ -12,6 +12,7 @@ import { ToastService } from './services/Toast';
 import { SessionService } from './services/Session';
 import { AuthService } from './services/Auth';
 import { AuthInterceptorService } from './services/AuthInterceptor';
+import { RoleAuthorization } from './services/RoleAuthorization';
 
 import { config } from './config';
 import { startUp } from './startup';
@@ -35,6 +36,7 @@ angular
   .factory('Auth', AuthService)
   .factory('Session', SessionService)
   .factory('authInterceptor', AuthInterceptorService)
+  .factory('RoleAuth', RoleAuthorization)
   .constant('DB_EVENTS', DB_EVENTS)
   .constant('USER_ROLES', USER_ROLES)
   .constant('AUTH_EVENTS', AUTH_EVENTS)

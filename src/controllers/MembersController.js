@@ -1,25 +1,29 @@
 class MembersController {
-  constructor($rootScope, database, $mdDialog, toast, DB_EVENTS) {
-    console.log('Loading Members');
+  constructor($rootScope, database, $mdDialog, toast, DB_EVENTS, $state,
+              RoleAuth) {
 
-    this.rootScope = $rootScope;
-    this.database = database;
-    this.mdDialog = $mdDialog;
-    this.toast = toast;
-    this.DB_EVENTS = DB_EVENTS;
+    if (! RoleAuth.authorizeUser($state.current.data.authorizedRoles)) {
+      console.log('shuuuuu!!');
+    } else {
+      this.rootScope = $rootScope;
+      this.database = database;
+      this.mdDialog = $mdDialog;
+      this.toast = toast;
+      this.DB_EVENTS = DB_EVENTS;
 
-    this.newMember = '';
-    this.sortable = false;
-    this.delete = false;
-    this.members = [];
-    this.initMembers = [];
-    this.unsavedChanges = false;
+      this.newMember = '';
+      this.sortable = false;
+      this.delete = false;
+      this.members = [];
+      this.initMembers = [];
+      this.unsavedChanges = false;
 
-    this.database.getClanMembers(this.rootScope.user.clanID).then((data) => {
-      console.log('got data', data);
-      this.members = data;
-      this.initMembers = _.cloneDeep(data.members);
-    });
+      this.database.getClanMembers(this.rootScope.user.clanID).then((data) => {
+        console.log('got data', data);
+        this.members = data;
+        this.initMembers = _.cloneDeep(data.members);
+      });
+    }
   }
   
   getColor (war) {
@@ -125,7 +129,7 @@ class MembersController {
 }
 
 MembersController.$inject = ['$rootScope', 'database', '$mdDialog',
-                             'toast', 'DB_EVENTS'];
+                             'toast', 'DB_EVENTS', '$state', 'RoleAuth'];
 
 
 function EditorController ($scope, $mdDialog, player) {

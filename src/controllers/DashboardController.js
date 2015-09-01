@@ -1,12 +1,11 @@
 class DashboardController {
-  constructor ($rootScope, $state, $mdDialog) {
-    this.state = $state;
-    this.mdDialog = $mdDialog;
+  constructor ($rootScope, $state, $mdDialog, RoleAuth) {
 
-    let authorizedRoles = $state.current.data.authorizedRoles;
-    if (authorizedRoles.indexOf($rootScope.user.role) === -1) {
-      console.log('role not authorized');
-      $state.go('login');
+    if (! RoleAuth.authorizeUser($state.current.data.authorizedRoles)) {
+      console.log('shuuuu!!');
+    } else {
+      this.state = $state;
+      this.mdDialog = $mdDialog;
     }
   }
 
@@ -42,7 +41,7 @@ class DashboardController {
 
 }
 
-DashboardController.$inject = ['$rootScope', '$state', '$mdDialog'];
+DashboardController.$inject = ['$rootScope', '$state', '$mdDialog', 'RoleAuth'];
 
 function JoinClanController ($rootScope, $scope, $mdDialog, database, Session,
                              USER_ROLES, $state, toast) {
@@ -67,7 +66,8 @@ function JoinClanController ($rootScope, $scope, $mdDialog, database, Session,
             $state.go('members');
           } else {
             console.log('failed to join clan');
-            $scope.hide();
+            toast.showToast('Clan does not exists.');
+            //$scope.hide();
           }
         }, (err) => {
           console.log('error:', err);

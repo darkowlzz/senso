@@ -1,9 +1,12 @@
 class LoginController {
-  constructor($state) {
-    //console.log($state.current.data.authorizedRoles);
+  constructor($rootScope, $state, RoleAuth) {
+    // if access token exists, go to dashboard
+    if (! _.isEmpty($rootScope.user.accessToken)) {
+      $state.go('dashboard');
+    }
   }
 }
 
-LoginController.$inject = ['$state'];
+LoginController.$inject = ['$rootScope', '$state', 'RoleAuth'];
 
 export { LoginController };

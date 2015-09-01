@@ -5,6 +5,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return resp.data;
     }, (err) => {
       console.log('REQUEST FAILED :o', err);
+      return err.data;
     });
     return promise;
   }
