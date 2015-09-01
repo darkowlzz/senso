@@ -5,6 +5,13 @@ function ToastService ($mdToast) {
         $mdToast.simple()
           .content('Saved!')
           .position('top right'));
+    },
+
+    showToast: function showToast (message) {
+      $mdToast.show(
+        $mdToast.simple()
+          .content(message)
+          .position('top right'));
     }
   }
 }

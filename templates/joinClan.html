@@ -1,0 +1,21 @@
+<md-dialog aria-label="Member Edit">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Join Clan</h2>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:800px;max-height:810px;">
+      <div>
+        <md-input-container>
+          <label>Clan ID</label>
+          <input ng-model="clanID" required>
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+      <md-button ng-click="joinRequest()">Send Join Request</md-button>
+    </div>
+  </form>
+</md-dialog>

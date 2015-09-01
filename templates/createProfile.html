@@ -1,29 +1,31 @@
 <div layout="column" flex>
 
-  <div flex class="md-padding">
+  <form>
+    <div flex class="md-padding">
+      <div layout="row" layout-align="center center">
+        <h3>Create Profile</h3>
+      </div>
+
+      <div layout-padding layout="row" layout-sm="column">
+        <md-input-container flex>
+          <label>Name</label>
+          <input ng-model="cp.name" required>
+        </md-input-container>
+        <md-input-container flex>
+          <label>Email</label>
+          <input ng-model="cp.email" type="email" required>
+        </md-input-container>
+      </div>
+      <div layout-padding layout="row" layout-sm="column">
+        <md-input-container>
+          <label>COC Nick</label>
+          <input ng-model="cp.nick" required>
+        </md-input-container>
+      </div>
+    </div>
+
     <div layout="row" layout-align="center center">
-      <h3>Create Profile</h3>
+      <md-button class="md-raised" ng-click="cp.submitData()">Create</md-button>
     </div>
-
-    <div layout-padding layout="row" layout-sm="column">
-      <md-input-container flex>
-        <label>Name</label>
-        <input ng-model="cp.name" required>
-      </md-input-container>
-      <md-input-container flex>
-        <label>Email</label>
-        <input ng-model="cp.email" type="email" required>
-      </md-input-container>
-    </div>
-    <div layout-padding layout="row" layout-sm="column">
-      <md-input-container>
-        <label>COC Nick</label>
-        <input ng-model="cp.nick" required>
-      </md-input-container>
-    </div>
-  </div>
-
-  <div layout="row" layout-align="center center">
-    <md-button class="md-raised" ng-click="cp.submitData()">Create</md-button>
-  </div>
+  </form>
 </div>

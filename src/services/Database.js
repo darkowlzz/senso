@@ -47,6 +47,15 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    joinClan: function joinClan (userData, clanID) {
+      let req = {
+        method: 'PUT',
+        url: API_SERVER + '/api/v1/clan/' + clanID + '/join',
+        data: userData
+      }
+      return requestWrapper(req);
+    },
+
     /*
      // GET - /:clanID
     getClanData: function getClanData () {
