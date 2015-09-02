@@ -27,6 +27,16 @@ class DashboardController {
     this.state.go('war');
   }
 
+  toggleWar () {
+    this.database.toggleWar(this.rootScope.user.userID).then((r) => {
+      if (!! r.success) {
+        this.Session.inWar = r.inWar;
+      } else {
+        console.log('failed to toggle war');
+      }
+    });
+  }
+
   leaveClan (ev) {
     let confirm = this.mdDialog.confirm()
           .title('Leaving the clan')

@@ -27,7 +27,8 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
                 if (!! r.success) {
                   Session.create(r.user.name, r.user.email,
                                loginData.loginService, r.token, r.user.role,
-                               r.user.userID, r.user.clanID, r.user.clanName);
+                               r.user.userID, r.user.clanID, r.user.clanName,
+                               r.user.inWar);
                   $rootScope.user = Session.sessionData;
                   $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 } else {

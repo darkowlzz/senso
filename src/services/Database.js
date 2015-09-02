@@ -65,6 +65,14 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    toggleWar: function toggleWar (userID) {
+      let req = {
+        method: 'GET',
+        url: API_SERVER + '/api/v1/user/' + userID + '/toggleWar'
+      }
+      return requestWrapper(req);
+    },
+
     /*
      // GET - /:clanID
     getClanData: function getClanData () {
@@ -164,6 +172,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    /*
     toggleWar: function toggleWar (clanID) {
       let req = {
         method: 'GET',
@@ -171,6 +180,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       }
       return requestWrapper(req);
     }
+    */
     /*
     // PUT - /:clanID/members/update
     updateClanMembers: function updateClanMembers (data) {
