@@ -1,11 +1,17 @@
 class DashboardController {
-  constructor ($rootScope, $state, $mdDialog, RoleAuth) {
+  constructor ($rootScope, $state, $mdDialog, RoleAuth, database,
+               USER_ROLES, toast, Session) {
 
     if (! RoleAuth.authorizeUser($state.current.data.authorizedRoles)) {
       console.log('shuuuu!!');
     } else {
+      this.rootScope = $rootScope;
       this.state = $state;
       this.mdDialog = $mdDialog;
+      this.database = database;
+      this.USER_ROLES = USER_ROLES;
+      this.toast = toast;
+      this.Session = Session;
     }
   }
 
@@ -19,6 +25,33 @@ class DashboardController {
 
   gotoWar () {
     this.state.go('war');
+  }
+
+  leaveClan (ev) {
+    let confirm = this.mdDialog.confirm()
+          .title('Leaving the clan')
+          .content('Are you sure you want to leave the clan?')
+          .ariaLabel('leave clan')
+          .ok('Yes, leave Clan')
+          .cancel('Nope')
+          .targetEvent(ev);
+    this.mdDialog.show(confirm).then(() => {
+      this.database.leaveClan(
+        { userID: this.rootScope.user.userID }, this.rootScope.user.clanID)
+        .then((r) => {
+          if (!! r.success) {
+            this.Session.clanID = null;
+            this.Session.clanName = null;
+            this.Session.role = this.USER_ROLES.user;
+            this.toast.showToast('Clan left.');
+          } else {
+            console.log('failed to leave clan');
+            this.toast.showToast('Failed to leave clan.');
+          }
+        });
+    }, function() {
+      console.log('cancelled');
+    });
   }
 
   joinClan (ev) {
@@ -41,7 +74,9 @@ class DashboardController {
 
 }
 
-DashboardController.$inject = ['$rootScope', '$state', '$mdDialog', 'RoleAuth'];
+DashboardController.$inject = ['$rootScope', '$state', '$mdDialog', 'RoleAuth',
+                               'database', 'USER_ROLES', 'toast', 'Session'];
+
 
 function JoinClanController ($rootScope, $scope, $mdDialog, database, Session,
                              USER_ROLES, $state, toast) {
@@ -67,7 +102,6 @@ function JoinClanController ($rootScope, $scope, $mdDialog, database, Session,
           } else {
             console.log('failed to join clan');
             toast.showToast('Clan does not exists.');
-            //$scope.hide();
           }
         }, (err) => {
           console.log('error:', err);

@@ -5,7 +5,6 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return resp.data;
     }, (err) => {
       console.log('REQUEST FAILED :o', err);
-      return err.data;
     });
     return promise;
   }
@@ -52,6 +51,15 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       let req = {
         method: 'PUT',
         url: API_SERVER + '/api/v1/clan/' + clanID + '/join',
+        data: userData
+      }
+      return requestWrapper(req);
+    },
+
+    leaveClan: function leaveClan (userData, clanID) {
+      let req = {
+        method: 'PUT',
+        url: API_SERVER + '/api/v1/clan/' + clanID + '/leave',
         data: userData
       }
       return requestWrapper(req);

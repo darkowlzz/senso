@@ -23,7 +23,6 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
               };
               //$window.sessionStorage.token = $rootScope.loginData.accessToken;
               database.login(loginData).then((r) => {
-                console.log(r);
                 // use the received token as the access token for further req
                 if (!! r.success) {
                   Session.create(r.user.name, r.user.email,

@@ -25,7 +25,6 @@ function startUp ($rootScope, Auth, AUTH_EVENTS, Session, $state) {
   /** Event callbacks **/
 
   function createProfile () {
-    console.log('create profile callback');
     $state.go('createProfile');
   }
 

@@ -43,12 +43,14 @@ class CreateClanController {
           this.database.updateUser({
             userID: this.rootScope.user.userID,
             clanID: this.clanID,
-            clanName: this.name
+            clanName: this.name,
+            role: this.USER_ROLES.leader
           }).then((result) => {
             console.log('updated user data');
+            // NOTE: Use server retrieved data below
             this.Session.clanID = this.clanID;
             this.Session.clanName = this.name;
-            this.Session.role = this.USER_ROLES.member;
+            this.Session.role = this.USER_ROLES.leader;
             this.state.go('members');
           });
         } else {
