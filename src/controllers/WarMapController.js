@@ -1,34 +1,43 @@
 class WarMapController {
-  constructor($mdDialog, $state, database, DB_EVENTS, toast) {
-    this.mdDialog = $mdDialog;
-    this.state = $state;
-    this.database = database;
-    this.DB_EVENTS = DB_EVENTS;
-    this.toast = toast
+  constructor($rootScope, $mdDialog, $state, database, RoleAuth, DB_EVENTS, toast) {
 
-    this.warMembers = [];
-    this.warMap = [];
-    this.initWarMap = [];
-    this.unsavedChanges = false;
+    if (! RoleAuth.authorizeUser($state.current.data.authorizedRoles)) {
+      console.log('shuuuuu!!');
+    } else {
+      this.rootScope = $rootScope;
+      this.mdDialog = $mdDialog;
+      this.state = $state;
+      this.database = database;
+      this.DB_EVENTS = DB_EVENTS;
+      this.toast = toast
 
-    this.database.getClanData().then((data) => {
-      if (! data.warReady) {
-        this.state.go('war');
-      } else {
-        //this.database.getWarMembers().then((data) => {
-        this.warMembers = data.warMembers;
-        this.warMap = data.warMap;
-        this.initWarMap = _.cloneDeep(data.warMap);
-        //});
-      }
-    });
+      this.warMembers = [];
+      this.warMap = [];
+      //this.initWarMap = [];
+      //this.unsavedChanges = false;
 
+      this.database.isWarOn(this.rootScope.user.clanID).then((data) => {
+        if (! data.isWarOn) {
+          this.state.go('war');
+        } else {
+          this.database.getWarMembers(this.rootScope.user.clanID).then((warMembers) => {
+            this.warMembers = warMembers;
+            this.database.getWarMap(this.rootScope.user.clanID).then((warMap) => {
+              this.warMap = warMap;
+            });
+          });
+        }
+      });
+    }
   }
 
+  /*
   changed () {
     this.unsavedChanges = true;
   }
+  */
 
+  /*
   applyChanges (ev) {
     this.database.updateWarMap(
         { initWarMap: this.initWarMap,
@@ -61,6 +70,7 @@ class WarMapController {
             }
           });
   }
+  */
 
 
   openEditor (ev, item) {
@@ -73,7 +83,6 @@ class WarMapController {
       locals: { target: item, players: this.warMembers }
     })
     .then((answer) => {
-      this.changed();
       // done
     }, () => {
       // cancelled
@@ -81,20 +90,25 @@ class WarMapController {
   }
 
   endWar () {
-    this.database.warMembersReset().then(() => {
-      this.database.updateWarMap(
-          { initWarMap: this.initWarMap,
-            warMap: [] }).then(() => {
-        this.database.toggleWar().then(() => {
-          this.state.go('war');
+    this.database.resetWarMembers(this.rootScope.user.clanID).then((r) => {
+      if (!! r.success) {
+        this.database.updateWarMap({ clanID: this.rootScope.user.clanID,
+                                     warMap: [] }).then((r) => {
+          if (!! r.success) {
+            this.database.toggleClanWar(this.rootScope.user.clanID).then((r) => {
+              if (!! r.success) {
+                this.state.go('war');
+              }
+            });
+          }
         });
-      });
+      }
     })
   }
 }
 
-WarMapController.$inject = ['$mdDialog', '$state', 'database',
-                            'DB_EVENTS', 'toast'];
+WarMapController.$inject = ['$rootScope', '$mdDialog', '$state', 'database',
+                            'RoleAuth', 'DB_EVENTS', 'toast'];
 
 
 function EditorController ($scope, $mdDialog, target, players) {

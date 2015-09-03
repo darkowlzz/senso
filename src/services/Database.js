@@ -65,6 +65,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    // Player war status
     toggleWar: function toggleWar (userID) {
       let req = {
         method: 'GET',
@@ -73,6 +74,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    // NOTE: combine addToWar and outOfWar
     addToWar: function addToWar (userID) {
       let req = {
         method: 'GET',
@@ -85,6 +87,47 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       let req = {
         method: 'GET',
         url: API_SERVER + '/api/v1/user/' + userID + '/outWar'
+      }
+      return requestWrapper(req);
+    },
+
+    toggleClanWar: function startWar (clanID) {
+      let req = {
+        method: 'GET',
+        url: API_SERVER + '/api/v1/clan/' + clanID + '/war/toggle'
+      }
+      return requestWrapper(req);
+    },
+
+    isWarOn: function isWarOn (clanID) {
+      let req = {
+        method: 'GET',
+        url: API_SERVER + '/api/v1/clan/' + clanID + '/isWarOn'
+      }
+      return requestWrapper(req);
+    },
+
+    getWarMap: function getWarMap (clanID) {
+      let req = {
+        method: 'GET',
+        url: API_SERVER + '/api/v1/clan/' + clanID + '/warMap'
+      }
+      return requestWrapper(req);
+    },
+
+    resetWarMembers: function resetWarMembers (clanID) {
+      let req = {
+        method: 'GET',
+        url: API_SERVER + '/api/v1/clan/' + clanID + '/war/members/reset'
+      }
+      return requestWrapper(req);
+    },
+
+    updateWarMap: function updateWarMap (putData) {
+      let req = {
+        method: 'PUT',
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/warmap/update',
+        data: putData
       }
       return requestWrapper(req);
     },
@@ -176,24 +219,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
-    // NUY
-    updateWarMap: function updateWarMap (putData) {
-      let req = {
-        method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/warmap/update',
-        data: putData
-      }
-      return requestWrapper(req);
-    },
 
-    // NUY
-    resetWarMembers: function resetWarMembers (clanID) {
-      let req = {
-        method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/war/members/reset'
-      }
-      return requestWrapper(req);
-    },
 
     /*
     toggleWar: function toggleWar (clanID) {

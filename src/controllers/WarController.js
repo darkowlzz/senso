@@ -16,24 +16,19 @@ class WarController {
       this.initWarMembers = [];
       this.unsavedChanges = false;
 
-      /*
-      this.database.getClanData().then((data) => {
-        if (data.warReady) {
+      this.database.isWarOn(this.rootScope.user.clanID).then((data) => {
+        if (data.isWarOn) {
           this.state.go('warmap');
+        } else {
+          this.database.getWarReadyMembers(this.rootScope.user.clanID)
+            .then((warReady) => {
+              console.log(warReady);
+              this.database.getWarMembers(this.rootScope.user.clanID)
+                .then((warMembers) => {
+                  this.separateWarReadyAndSelected(warReady, warMembers);
+              });
+          });
         }
-      });
-      */
-
-      this.database.getWarReadyMembers(this.rootScope.user.clanID).then((warReady) => {
-        console.log(warReady);
-        this.database.getWarMembers(this.rootScope.user.clanID).then((warMembers) => {
-          this.separateWarReadyAndSelected(warReady, warMembers);
-        })
-        /*
-        this.database.getWarMembers().then((warMembers) => {
-          this.separateWarReadyAndSelected(warReady, warMembers);
-        });
-        */
       });
     }
   }
@@ -56,6 +51,7 @@ class WarController {
     }
   }
 
+  /*
   applyChanges (ev) {
     this.database.updateWarMembers(
         { name: this.rootScope.clanName,
@@ -89,6 +85,7 @@ class WarController {
             }
           });
   }
+  */
 
   addToWar (item) {
     this.database.addToWar(item.userID).then((r) => {
@@ -117,13 +114,19 @@ class WarController {
   startWar () {
     let map = [];
     for (let i = 1; i <= this.warMembers.length; i++) {
-      map.push({ number: i, player: null });
+      map.push({ number: i, players: [] });
     }
-    this.database.updateWarMap({initWarMap: [], warMap: map}).then(() => {
-      this.database.toggleWar().then(() => {
-        this.state.go('warmap');
-      });
-    })
+    this.database.updateWarMap({ clanID: this.rootScope.user.clanID,
+                                 warMap: map }).then((r) => {
+      if (!! r.success) {
+        this.database.toggleClanWar(this.rootScope.user.clanID).then((r) => {
+          if (!! r.success) {
+            // NOTE: use r.inWar and store somewhere
+            this.state.go('warmap');
+          }
+        });
+      }
+    });
   }
 }
 
