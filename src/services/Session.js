@@ -1,7 +1,7 @@
 function SessionService ($rootScope, localStorageService) {
   return {
     create: function create (username, email, loginService, token, role,
-                             userID, clanID, clanName, inWar) {
+                             userID, clanID, clanName, warReady) {
       localStorageService.set('username', username);
       localStorageService.set('email', email);
       localStorageService.set('loginService', loginService);
@@ -11,7 +11,7 @@ function SessionService ($rootScope, localStorageService) {
       localStorageService.set('userID', userID);
       localStorageService.set('clanID', clanID);
       localStorageService.set('clanName', clanName);
-      localStorageService.set('inWar', inWar);
+      localStorageService.set('warReady', warReady);
     },
 
     set username (name) {
@@ -39,10 +39,10 @@ function SessionService ($rootScope, localStorageService) {
       $rootScope.user.clanName = name;
     },
 
-    set inWar (status) {
-      console.log('inside setter inWar');
-      localStorageService.set('inWar', status);
-      $rootScope.user.inWar = status;
+    set warReady (status) {
+      console.log('inside setter warReady');
+      localStorageService.set('warReady', status);
+      $rootScope.user.warReady = status;
     },
 
     set role (roleTitle) {
@@ -68,7 +68,7 @@ function SessionService ($rootScope, localStorageService) {
         userID: localStorageService.get('userID'),
         clanID: localStorageService.get('clanID'),
         clanName: localStorageService.get('clanName'),
-        inWar: Boolean(localStorageService.get('inWar'))
+        warReady: Boolean(localStorageService.get('warReady'))
       };
     }
   }

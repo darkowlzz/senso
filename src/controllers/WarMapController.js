@@ -12,7 +12,7 @@ class WarMapController {
     this.unsavedChanges = false;
 
     this.database.getClanData().then((data) => {
-      if (! data.inWar) {
+      if (! data.warReady) {
         this.state.go('war');
       } else {
         //this.database.getWarMembers().then((data) => {

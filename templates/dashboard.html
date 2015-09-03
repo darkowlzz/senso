@@ -9,7 +9,7 @@
       <p>Hola {{user.username}}!</p>
       <p>Clan: {{user.clanName || 'None'}}</p>
 
-      <md-switch class="md-primary" ng-model="user.inWar" ng-click="dashCtrl.toggleWar();"
+      <md-switch class="md-primary" ng-model="user.warReady" ng-click="dashCtrl.toggleWar();"
           md-no-ink aria-label="Toggle War">
         War
       </md-switch>

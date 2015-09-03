@@ -30,7 +30,7 @@ class DashboardController {
   toggleWar () {
     this.database.toggleWar(this.rootScope.user.userID).then((r) => {
       if (!! r.success) {
-        this.Session.inWar = r.inWar;
+        this.Session.warReady = r.warReady;
       } else {
         console.log('failed to toggle war');
       }
@@ -106,7 +106,7 @@ function JoinClanController ($rootScope, $scope, $mdDialog, database, Session,
             console.log('clan joined');
             Session.clanID = r.clanID;
             Session.clanName = r.clanName;
-            Session.role = USER_ROLES.member;
+            Session.role = r.role;
             $scope.hide();
             $state.go('members');
           } else {

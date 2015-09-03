@@ -42,7 +42,7 @@ class MembersController {
     if (this.newMember == '') {
       return;
     }
-    this.members.push({name: this.newMember, note: '', inWar: false});
+    this.members.push({name: this.newMember, note: '', warReady: false});
     this.newMember = '';
     this.changed();
   }

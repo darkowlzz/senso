@@ -1,28 +1,38 @@
 class WarController {
-  constructor($rootScope, database, $mdDialog, DB_EVENTS, $state, toast) {
-    this.rootScope = $rootScope;
-    this.database = database;
-    this.mdDialog = $mdDialog;
-    this.DB_EVENTS = DB_EVENTS;
-    this.state = $state;
-    this.toast = toast;
+  constructor($rootScope, database, $mdDialog, RoleAuth, DB_EVENTS, $state, toast) {
 
-    this.members = [];
-    this.warMembers = [];
-    this.initWarMembers = [];
-    this.unsavedChanges = false;
+    if (! RoleAuth.authorizeUser($state.current.data.authorizedRoles)) {
+      console.log('shuuuuu!!');
+    } else {
+      this.rootScope = $rootScope;
+      this.database = database;
+      this.mdDialog = $mdDialog;
+      this.DB_EVENTS = DB_EVENTS;
+      this.state = $state;
+      this.toast = toast;
 
-    this.database.getClanData().then((data) => {
-      if (data.inWar) {
-        this.state.go('warmap');
-      }
-    });
+      this.members = [];
+      this.warMembers = [];
+      this.initWarMembers = [];
+      this.unsavedChanges = false;
 
-    this.database.getWarReadyMembers().then((warReady) => {
-      this.database.getWarMembers().then((warMembers) => {
-        this.separateWarReadyAndSelected(warReady, warMembers);
+      /*
+      this.database.getClanData().then((data) => {
+        if (data.warReady) {
+          this.state.go('warmap');
+        }
       });
-    });
+      */
+
+      this.database.getWarReadyMembers(this.rootScope.user.clanID).then((warReady) => {
+        console.log(warReady);
+        /*
+        this.database.getWarMembers().then((warMembers) => {
+          this.separateWarReadyAndSelected(warReady, warMembers);
+        });
+        */
+      });
+    }
   }
 
   changed () {
@@ -109,7 +119,7 @@ class WarController {
   }
 }
 
-WarController.$inject = ['$rootScope', 'database', '$mdDialog',
+WarController.$inject = ['$rootScope', 'database', '$mdDialog', 'RoleAuth',
                          'DB_EVENTS', '$state', 'toast'];
 
 export { WarController };
