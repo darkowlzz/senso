@@ -73,6 +73,22 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    addToWar: function addToWar (userID) {
+      let req = {
+        method: 'GET',
+        url: API_SERVER + '/api/v1/user/' + userID + '/inWar'
+      }
+      return requestWrapper(req);
+    },
+
+    outOfWar: function outOfWar (userID) {
+      let req = {
+        method: 'GET',
+        url: API_SERVER + '/api/v1/user/' + userID + '/outWar'
+      }
+      return requestWrapper(req);
+    },
+
     /*
      // GET - /:clanID
     getClanData: function getClanData () {
@@ -85,6 +101,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     },
     */
 
+    // not used yet
     getUserDetails: function getUserDetails (userID) {
       let req = {
         method: 'GET',
@@ -93,6 +110,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    // NUY
     getClanDetails: function getClanDetails (clanID) {
       let req = {
         method: 'GET',
@@ -100,7 +118,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       }
       return requestWrapper(req);
     },
-
+ 
     getClanMembers: function getClanMembers (clanID) {
       let req = {
         method: 'GET',
@@ -108,6 +126,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       }
       return requestWrapper(req);
     },
+
 
     getWarReadyMembers: function getWarReadyMembers (clanID) {
       let req = {
@@ -117,6 +136,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+
     getWarMembers: function getWarMembers (clanID) {
       let req = {
         method: 'GET',
@@ -125,7 +145,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
-
+    // NUY
     updateClanDetails: function updateClanDetails (putData) {
       let req = {
         method: 'PUT',
@@ -135,6 +155,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    // NUY
     updateClanMembers: function updateClanMembers (putData) {
       let req = {
         method: 'PUT',
@@ -144,6 +165,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    //NUY
     updateWarMembers: function updateWarMembers (putData) {
       let req = {
         method: 'PUT',
@@ -154,6 +176,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    // NUY
     updateWarMap: function updateWarMap (putData) {
       let req = {
         method: 'PUT',
@@ -163,7 +186,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
-
+    // NUY
     resetWarMembers: function resetWarMembers (clanID) {
       let req = {
         method: 'GET',

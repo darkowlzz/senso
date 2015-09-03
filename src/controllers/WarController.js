@@ -26,6 +26,9 @@ class WarController {
 
       this.database.getWarReadyMembers(this.rootScope.user.clanID).then((warReady) => {
         console.log(warReady);
+        this.database.getWarMembers(this.rootScope.user.clanID).then((warMembers) => {
+          this.separateWarReadyAndSelected(warReady, warMembers);
+        })
         /*
         this.database.getWarMembers().then((warMembers) => {
           this.separateWarReadyAndSelected(warReady, warMembers);
@@ -35,15 +38,12 @@ class WarController {
     }
   }
 
-  changed () {
-    this.unsavedChanges = true;
-  }
-
   separateWarReadyAndSelected (warReady, warMembers) {
     if (warMembers) {
       this.members = _.reject(warReady, (wr) => {
         for (let i=0; i < warMembers.length; i++) {
-          if (warMembers[i].name == wr.name) {
+          // always compare using userID
+          if (warMembers[i].userID == wr.userID) {
             return true;
           }
         }
@@ -91,19 +91,27 @@ class WarController {
   }
 
   addToWar (item) {
-    this.warMembers.push(item);
-    _.remove(this.members, (mem) => {
-      return mem.name == item.name;
+    this.database.addToWar(item.userID).then((r) => {
+      if (!! r.success) {
+        this.warMembers.push(item);
+        _.remove(this.members, (mem) => {
+          return mem.name == item.name;
+        });
+        this.toast.showToast('Added to War');
+      }
     });
-    this.changed();
   }
 
   removeFromWar (item) {
-    this.members.push(item);
-    _.remove(this.warMembers, (mem) => {
-      return mem.name == item.name;
+    this.database.outOfWar(item.userID).then((r) => {
+      if (!! r.success) {
+        this.members.push(item);
+        _.remove(this.warMembers, (mem) => {
+          return mem.name == item.name;
+        });
+        this.toast.showToast('Moved out of war');
+      }
     });
-    this.changed();
   }
 
   startWar () {

@@ -9,7 +9,7 @@
       <md-list-item class="war" ng-repeat="member in war.members"
         layout-margin layout-padding>
         <ng-md-icon icon="person" size="20"></ng-md-icon>
-        <p>{{ member.name }} </p>
+        <p>{{ member.nick }} </p>
         <md-button class="md-raised md-primary" ng-click="war.addToWar(member)">Add to War</md-button>
       </md-list-item>
     </md-list>
@@ -23,14 +23,16 @@
       <md-list-item class="war" ng-repeat="member in war.warMembers" 
         layout-margin layout-padding>
         <ng-md-icon icon="person" size="20"></ng-md-icon>
-        <p>{{ member.name }} </p>
+        <p>{{ member.nick }} </p>
         <md-button class="md-raise md-warn" ng-click="war.removeFromWar(member)">Move Out</md-button>
       </md-list-item>
     </md-list>
 
+    <!--
     <div layout="row" layout-align="center center">
       <md-button ng-disabled="!war.unsavedChanges" class="md-raised md-primary" ng-click="war.applyChanges($event)">Save Changes</md-button>
     </div>
+    -->
 
   </div>
 
