@@ -15,6 +15,5 @@
     "tests"
   ],
   "dependencies": {
-    "angular-sortable-view": "~0.0.13"
   }
 }

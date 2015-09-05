@@ -40,7 +40,6 @@ function SessionService ($rootScope, localStorageService) {
     },
 
     set warReady (status) {
-      console.log('inside setter warReady');
       localStorageService.set('warReady', status);
       $rootScope.user.warReady = status;
     },
@@ -57,7 +56,6 @@ function SessionService ($rootScope, localStorageService) {
     },
 
     get sessionData () {
-      console.log('getting new data');
       return {
         username: localStorageService.get('username'),
         email: localStorageService.get('email'),

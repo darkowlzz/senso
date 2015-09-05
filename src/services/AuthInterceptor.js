@@ -8,13 +8,13 @@ function AuthInterceptorService ($q, localStorageService) {
           config.headers.Authorization = 'Bearer ' + localStorageService.get('accessToken');
         }
       } else {
-        console.log('login request');
+        //console.log('login request');
       }
       return config;
     },
     response: function (response) {
       if (response.status === 401) {
-        console.log('user not authenticated')
+        //console.log('user not authenticated')
       }
       return response || $q.when(response);
     }

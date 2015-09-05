@@ -20,7 +20,6 @@ class WarController {
         } else {
           this.database.getWarReadyMembers(this.rootScope.user.clanID)
             .then((warReady) => {
-              console.log(warReady);
               this.database.getWarMembers(this.rootScope.user.clanID)
                 .then((warMembers) => {
                   this.separateWarReadyAndSelected(warReady, warMembers);

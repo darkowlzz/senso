@@ -32,7 +32,7 @@ class DashboardController {
       if (!! r.success) {
         this.Session.warReady = r.warReady;
       } else {
-        console.log('failed to toggle war');
+        //console.log('failed to toggle war');
       }
     });
   }
@@ -55,17 +55,15 @@ class DashboardController {
             this.Session.role = this.USER_ROLES.user;
             this.toast.showToast('Clan left.');
           } else {
-            console.log('failed to leave clan');
             this.toast.showToast('Failed to leave clan.');
           }
         });
     }, function() {
-      console.log('cancelled');
+      //console.log('cancelled');
     });
   }
 
   joinClan (ev) {
-    console.log('opening box');
     this.mdDialog.show({
       controller: JoinClanController,
       templateUrl: 'templates/joinClan.html',
@@ -90,27 +88,22 @@ DashboardController.$inject = ['$rootScope', '$state', '$mdDialog', 'RoleAuth',
 
 function JoinClanController ($rootScope, $scope, $mdDialog, database, Session,
                              USER_ROLES, $state, toast) {
-  console.log('inside joinclanctrl');
   $scope.clanID = '';
 
   $scope.joinRequest = function () {
     if (_.isEmpty($scope.clanID)) {
-      console.log('Enter clanID');
       toast.showToast('Clan ID can\'t be blank.');
       return;
     } else {
-      console.log('sending join request to ', $scope.clanID);
       database.joinClan({ userID: $rootScope.user.userID }, $scope.clanID)
         .then((r) => {
           if (!! r.success) {
-            console.log('clan joined');
             Session.clanID = r.clanID;
             Session.clanName = r.clanName;
             Session.role = r.role;
             $scope.hide();
             $state.go('members');
           } else {
-            console.log('failed to join clan');
             toast.showToast('Clan does not exists.');
           }
         }, (err) => {

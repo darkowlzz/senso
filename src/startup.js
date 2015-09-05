@@ -1,19 +1,14 @@
-function startUp ($rootScope, Auth, AUTH_EVENTS, Session, $state) {
+function startUp ($rootScope, Auth, AUTH_EVENTS, Session, $state, $window) {
 
   $rootScope.user = {};
 
   if (!! Session.sessionData.signedIn) {
-    console.log('found to be already signed in');
     $rootScope.user = Session.sessionData;
   } else {
-    console.log('cant find session data');
     $state.go('login');
   }
 
-  Auth.login();
-
   $rootScope.signOut = function () {
-    console.log('got logout req');
     Auth.logout();
   }
 
@@ -33,11 +28,11 @@ function startUp ($rootScope, Auth, AUTH_EVENTS, Session, $state) {
   }
 
   function showLogin () {
-    $state.go('login');
+    $window.location.href = '/';
   }
 }
 
 startUp.$inject = ['$rootScope', 'Auth', 'AUTH_EVENTS', 'Session',
-                   '$state'];
+                   '$state', '$window'];
 
 export { startUp };

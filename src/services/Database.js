@@ -4,7 +4,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     let promise = $http(rqst).then((resp) => {
       return resp.data;
     }, (err) => {
-      console.log('REQUEST FAILED :o', err);
+      //console.log('REQUEST FAILED :o', err);
     });
     return promise;
   }

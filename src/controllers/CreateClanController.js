@@ -22,7 +22,6 @@ class CreateClanController {
 
   submitData () {
     if (_.isEmpty(this.name) || _.isEmpty(this.clanID)) {
-      console.log('fill the required fields');
       this.toast.showToast('Complete the form.');
       return;
     } else {
@@ -35,18 +34,14 @@ class CreateClanController {
         warFrequency: this.frequency,
         description: this.description
       };
-      console.log(clanDetails);
       this.database.createClan(clanDetails).then((r) => {
-        console.log('clan created');
         if (!! r.success) {
-          console.log('updating user data');
           this.database.updateUser({
             userID: this.rootScope.user.userID,
             clanID: this.clanID,
             clanName: this.name,
             role: this.USER_ROLES.leader
           }).then((result) => {
-            console.log('updated user data');
             // NOTE: Use server retrieved data below
             this.Session.clanID = this.clanID;
             this.Session.clanName = this.name;
@@ -54,7 +49,7 @@ class CreateClanController {
             this.state.go('members');
           });
         } else {
-          console.log('failed to create clan');
+          //console.log('failed to create clan');
         }
       });
     }

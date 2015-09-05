@@ -19,7 +19,6 @@ class MembersController {
       this.unsavedChanges = false;
 
       this.database.getClanMembers(this.rootScope.user.clanID).then((data) => {
-        console.log('got data', data);
         this.members = data;
         this.initMembers = _.cloneDeep(data.members);
       });
@@ -55,7 +54,7 @@ class MembersController {
         .then((r) => {
           // check if there is an update error
           if (r.error) {
-            console.log('Error:', r.error);
+            //console.log('Error:', r.error);
           } else if (! r.success) {
             // check the reason for failure
             if (r.reason == this.DB_EVENTS.updateConflict) {
@@ -70,7 +69,7 @@ class MembersController {
                 this.members = r.newData;
                 this.initMembers = _.cloneDeep(r.newData);
               }, () => {
-                console.log('update cancelled');
+                //console.log('update cancelled');
               });
             }
           } else {
