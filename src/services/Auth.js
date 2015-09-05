@@ -9,45 +9,44 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
         Session.create(profile.getName(), 'google');
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
       }
+    },
 
-      $window.checkLoginState = function checkLoginState () {
-        FB.getLoginStatus((response) => {
-          if (response.status === 'connected') {
-            console.log('connected to fb');
-            FB.api('/me?fields=id,name,email', (resp) => {
-              let loginData = {
-                accessToken: response.authResponse.accessToken,
-                loginService: 'facebook',
-                email: resp.email,
-                name: resp.name
-              };
-              //$window.sessionStorage.token = $rootScope.loginData.accessToken;
-              database.login(loginData).then((r) => {
-                // use the received token as the access token for further req
-                if (!! r.success) {
-                  Session.create(r.user.name, r.user.email,
-                               loginData.loginService, r.token, r.user.role,
-                               r.user.userID, r.user.clanID, r.user.clanName,
-                               r.user.warReady);
-                  $rootScope.user = Session.sessionData;
-                  $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                } else {
-                  Session.create(loginData.name, loginData.email,
-                                 loginData.loginService, r.token);
-                  $rootScope.user = Session.sessionData;
-                  $rootScope.$broadcast('CREATE_PROFILE');
-                }
-              }, (err) => {
-                console.log('Error:', err);
-              });
+    fbLogin: function fbLogin () {
+      FB.login((response) => {
+        if (response.status === 'connected') {
+          console.log('connected to fb');
+          FB.api('/me?fields=id,name,email', (resp) => {
+            let loginData = {
+              accessToken: response.authResponse.accessToken,
+              loginService: 'facebook',
+              email: resp.email,
+              name: resp.name
+            };
+            database.login(loginData).then((r) => {
+              // use the received token as the access token for further req
+              if (!! r.success) {
+                Session.create(r.user.name, r.user.email,
+                             loginData.loginService, r.token, r.user.role,
+                             r.user.userID, r.user.clanID, r.user.clanName,
+                             r.user.warReady);
+                $rootScope.user = Session.sessionData;
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+              } else {
+                Session.create(loginData.name, loginData.email,
+                               loginData.loginService, r.token);
+                $rootScope.user = Session.sessionData;
+                $rootScope.$broadcast('CREATE_PROFILE');
+              }
+            }, (err) => {
+              console.log('Error:', err);
             });
-          } else if (response.status === 'not_authorized') {
-            console.log('Not logged into the app');
-          } else {
-            console.log('Not logged into facebook');
-          }
-        });
-      }
+          });
+        } else if (response.status === 'not_authorized') {
+          console.log('Not logged into the app');
+        } else {
+          console.log('Not logged into facebook');
+        }
+      });
     },
 
     logout: function logout () {

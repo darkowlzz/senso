@@ -13,8 +13,6 @@ class WarController {
 
       this.members = [];
       this.warMembers = [];
-      this.initWarMembers = [];
-      this.unsavedChanges = false;
 
       this.database.isWarOn(this.rootScope.user.clanID).then((data) => {
         if (data.isWarOn) {
@@ -51,42 +49,6 @@ class WarController {
     }
   }
 
-  /*
-  applyChanges (ev) {
-    this.database.updateWarMembers(
-        { name: this.rootScope.clanName,
-          initWarMembers: this.initWarMembers,
-          warMembers: this.warMembers } )
-          .then((r) => {
-            if (r.error) {
-              console.log('Error:', r.error);
-            } else if (! r.success) {
-              // check the reason for failure
-              if (r.reason == this.DB_EVENTS.updateConflict) {
-                let confirm = this.mdDialog.confirm()
-                    .title('Conflict while saving')
-                    .content('There was a conflict while saving the changes.')
-                    .ariaLabel('Save Conflict')
-                    .ok('Update to latest')
-                    .cancel('Cancel')
-                    .targetEvent(ev);
-                this.mdDialog.show(confirm).then(() => {
-                  this.separateWarReadyAndSelected(r.newData.warReadyMembers,
-                                                   r.newData.warMembers);
-                }, () => {
-                  console.log('update cancelled');
-                });
-              }
-            } else {
-              this.initWarMembers = _.cloneDeep(this.warMembers);
-              this.toast.savedToast();
-              this.unsavedChanges = false;
-              // change loading status
-            }
-          });
-  }
-  */
-
   addToWar (item) {
     this.database.addToWar(item.userID).then((r) => {
       if (!! r.success) {
@@ -114,10 +76,10 @@ class WarController {
   startWar () {
     let map = [];
     for (let i = 1; i <= this.warMembers.length; i++) {
-      map.push({ number: i, players: [] });
+      map.push({ number: i, player: '' });
     }
-    this.database.updateWarMap({ clanID: this.rootScope.user.clanID,
-                                 warMap: map }).then((r) => {
+    this.database.initWarMap({ clanID: this.rootScope.user.clanID,
+                               warMap: map }).then((r) => {
       if (!! r.success) {
         this.database.toggleClanWar(this.rootScope.user.clanID).then((r) => {
           if (!! r.success) {

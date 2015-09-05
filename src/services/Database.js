@@ -123,6 +123,23 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
       return requestWrapper(req);
     },
 
+    initWarMap: function initWarMap (putData) {
+      let req = {
+        method: 'PUT',
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/warmap/init',
+        data: putData
+      }
+      return requestWrapper(req);
+    },
+
+    resetWarMap: function resetWarMap (clanID) {
+      let req = {
+        method: 'GET',
+        url: API_SERVER + '/api/v1/clan/' + clanID + '/warmap/reset'
+      }
+      return requestWrapper(req);
+    },
+
     updateWarMap: function updateWarMap (putData) {
       let req = {
         method: 'PUT',

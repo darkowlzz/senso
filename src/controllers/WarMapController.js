@@ -13,8 +13,6 @@ class WarMapController {
 
       this.warMembers = [];
       this.warMap = [];
-      //this.initWarMap = [];
-      //this.unsavedChanges = false;
 
       this.database.isWarOn(this.rootScope.user.clanID).then((data) => {
         if (! data.isWarOn) {
@@ -31,48 +29,6 @@ class WarMapController {
     }
   }
 
-  /*
-  changed () {
-    this.unsavedChanges = true;
-  }
-  */
-
-  /*
-  applyChanges (ev) {
-    this.database.updateWarMap(
-        { initWarMap: this.initWarMap,
-          warMap: this.warMap } )
-          .then((r) => {
-            if (r.error) {
-              console.log('Error:', r.error);
-            } else if (! r.success) {
-              // check the reason for failure
-              if (r.reason == this.DB_EVENTS.updateConflict) {
-                let confirm = this.mdDialog.confirm()
-                    .title('Conflict while saving')
-                    .content('There was a conflict while saving the changes.')
-                    .ariaLabel('Save Conflict')
-                    .ok('Update to latest')
-                    .cancel('Cancel')
-                    .targetEvent(ev);
-                this.mdDialog.show(confirm).then(() => {
-                  this.warMap = r.newData;
-                  this.initWarMap = _.cloneDeep(r.newData);
-                }, () => {
-                  console.log('update cancelled');
-                });
-              }
-            } else {
-              this.initWarMap = _.cloneDeep(this.warMap);
-              this.toast.savedToast();
-              this.unsavedChanges = false;
-              // change loading status
-            }
-          });
-  }
-  */
-
-
   openEditor (ev, item) {
     this.mdDialog.show({
       controller: EditorController,
@@ -83,6 +39,15 @@ class WarMapController {
       locals: { target: item, players: this.warMembers }
     })
     .then((answer) => {
+      this.warMap[answer.number - 1].players = answer.player;
+      this.database.updateWarMap({clanID: this.rootScope.user.clanID,
+                                  target: answer.number, player: answer.player})
+        .then((r) => {
+          if (!! r.success) {
+            this.warMap = r.map;
+            this.toast.showToast('War map updated.');
+          }
+        });
       // done
     }, () => {
       // cancelled
@@ -92,8 +57,7 @@ class WarMapController {
   endWar () {
     this.database.resetWarMembers(this.rootScope.user.clanID).then((r) => {
       if (!! r.success) {
-        this.database.updateWarMap({ clanID: this.rootScope.user.clanID,
-                                     warMap: [] }).then((r) => {
+        this.database.resetWarMap(this.rootScope.user.clanID).then((r) => {
           if (!! r.success) {
             this.database.toggleClanWar(this.rootScope.user.clanID).then((r) => {
               if (!! r.success) {

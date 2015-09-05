@@ -5,8 +5,9 @@
         <h3>Login Page</h3>
       </div>
       <div>
-        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-        </fb:login-button>
+        <md-button ng-click="loginCtrl.fbLogin()" class="md-raised md-primary">
+          Log in with Facebook
+        </md-button>
       </div>
     </div>
   </div>

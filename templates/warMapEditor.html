@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Target Edit</h2>
+        <h2>Target Editor</h2>
         <span flex></span>
       </div>
     </md-toolbar>
@@ -15,15 +15,16 @@
         <md-input-container>
           <label>Player</label>
           <md-select ng-model="target.player" aria-label="Player Selector">
-            <md-option ng-repeat="player in players" value="{{ player.name }}">
-              {{ player.name }}
+            <md-option value="">None</md-option>
+            <md-option ng-repeat="player in players" value="{{ player.nick }}">
+              {{ player.nick }}
             </md-option>
           </md-select>
         </md-input-container>
       </div>
     </md-dialog-content>
     <div class="md-actions" layout="row">
-      <md-button ng-click="answer(target)">Done</md-button>
+      <md-button ng-click="answer({number: target.number, player: target.player})">Done</md-button>
     </div>
   </form>
 </md-dialog>
