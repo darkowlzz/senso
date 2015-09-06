@@ -1,9 +1,14 @@
-function DatabaseService ($rootScope, $http, API_SERVER) {
+function DatabaseService ($rootScope, $http, API_SERVER, AUTH_EVENTS) {
 
   function requestWrapper (rqst) {
     let promise = $http(rqst).then((resp) => {
+      console.log('got response');
+      console.log(resp.status);
       return resp.data;
     }, (err) => {
+      if (err.status === 401) {
+        $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+      }
       //console.log('REQUEST FAILED :o', err);
     });
     return promise;
@@ -309,6 +314,6 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
   }
 }
 
-DatabaseService.$inject = ['$rootScope', '$http', 'API_SERVER'];
+DatabaseService.$inject = ['$rootScope', '$http', 'API_SERVER', 'AUTH_EVENTS'];
 
 export { DatabaseService };

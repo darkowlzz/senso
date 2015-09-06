@@ -28,6 +28,8 @@ function startUp ($rootScope, Auth, AUTH_EVENTS, Session, $state, $window) {
   }
 
   function showLogin () {
+    Session.destroy();
+    $rootScope.user = {};
     $window.location.href = '/';
   }
 }
