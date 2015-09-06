@@ -14,13 +14,13 @@ class WarController {
       this.members = [];
       this.warMembers = [];
 
-      this.database.isWarOn(this.rootScope.user.clanID.toUpperCase()).then((data) => {
+      this.database.isWarOn().then((data) => {
         if (data.isWarOn) {
           this.state.go('warmap');
         } else {
-          this.database.getWarReadyMembers(this.rootScope.user.clanID.toUpperCase())
+          this.database.getWarReadyMembers()
             .then((warReady) => {
-              this.database.getWarMembers(this.rootScope.user.clanID.toUpperCase())
+              this.database.getWarMembers()
                 .then((warMembers) => {
                   this.separateWarReadyAndSelected(warReady, warMembers);
               });
@@ -42,7 +42,6 @@ class WarController {
         return false;
       });
       this.warMembers = warMembers;
-      this.initWarMembers = _.cloneDeep(warMembers);
     } else {
       this.members = warReady;
     }
@@ -77,10 +76,9 @@ class WarController {
     for (let i = 1; i <= this.warMembers.length; i++) {
       map.push({ number: i, player: '' });
     }
-    this.database.initWarMap({ clanID: this.rootScope.user.clanID.toUpperCase(),
-                               warMap: map }).then((r) => {
+    this.database.initWarMap({ warMap: map }).then((r) => {
       if (!! r.success) {
-        this.database.toggleClanWar(this.rootScope.user.clanID.toUpperCase()).then((r) => {
+        this.database.toggleClanWar().then((r) => {
           if (!! r.success) {
             // NOTE: use r.inWar and store somewhere
             this.state.go('warmap');

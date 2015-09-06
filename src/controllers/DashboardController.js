@@ -28,7 +28,7 @@ class DashboardController {
   }
 
   toggleWar () {
-    this.database.toggleWar(this.rootScope.user.userID).then((r) => {
+    this.database.toggleWar().then((r) => {
       if (!! r.success) {
         this.Session.warReady = r.warReady;
       } else {
@@ -46,8 +46,7 @@ class DashboardController {
           .cancel('Nope')
           .targetEvent(ev);
     this.mdDialog.show(confirm).then(() => {
-      this.database.leaveClan(
-        { userID: this.rootScope.user.userID }, this.rootScope.user.clanID.toUpperCase())
+      this.database.leaveClan()
         .then((r) => {
           if (!! r.success) {
             this.Session.clanID = null;
@@ -95,7 +94,7 @@ function JoinClanController ($rootScope, $scope, $mdDialog, database, Session,
       toast.showToast('Clan ID can\'t be blank.');
       return;
     } else {
-      database.joinClan({ userID: $rootScope.user.userID }, $scope.clanID.toUpperCase())
+      database.joinClan($scope.clanID.toUpperCase())
         .then((r) => {
           if (!! r.success) {
             Session.clanID = r.clanID.toUpperCase();

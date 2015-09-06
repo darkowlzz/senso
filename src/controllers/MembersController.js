@@ -18,7 +18,7 @@ class MembersController {
       this.initMembers = [];
       this.unsavedChanges = false;
 
-      this.database.getClanMembers(this.rootScope.user.clanID).then((data) => {
+      this.database.getClanMembers().then((data) => {
         this.members = data;
         this.initMembers = _.cloneDeep(data.members);
       });

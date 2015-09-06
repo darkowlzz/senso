@@ -37,7 +37,7 @@ class CreateClanController {
       this.database.createClan(clanDetails).then((r) => {
         if (!! r.success) {
           this.database.updateUser({
-            userID: this.rootScope.user.userID,
+            //userID: this.rootScope.user.userID,
             clanID: this.clanID.toUpperCase(),
             clanName: this.name,
             role: this.USER_ROLES.leader
