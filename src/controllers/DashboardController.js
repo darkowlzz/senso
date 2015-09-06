@@ -47,7 +47,7 @@ class DashboardController {
           .targetEvent(ev);
     this.mdDialog.show(confirm).then(() => {
       this.database.leaveClan(
-        { userID: this.rootScope.user.userID }, this.rootScope.user.clanID)
+        { userID: this.rootScope.user.userID }, this.rootScope.user.clanID.toUpperCase())
         .then((r) => {
           if (!! r.success) {
             this.Session.clanID = null;
@@ -95,10 +95,10 @@ function JoinClanController ($rootScope, $scope, $mdDialog, database, Session,
       toast.showToast('Clan ID can\'t be blank.');
       return;
     } else {
-      database.joinClan({ userID: $rootScope.user.userID }, $scope.clanID)
+      database.joinClan({ userID: $rootScope.user.userID }, $scope.clanID.toUpperCase())
         .then((r) => {
           if (!! r.success) {
-            Session.clanID = r.clanID;
+            Session.clanID = r.clanID.toUpperCase();
             Session.clanName = r.clanName;
             Session.role = r.role;
             $scope.hide();

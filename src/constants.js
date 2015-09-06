@@ -16,5 +16,6 @@ const AUTH_EVENTS = {
 };
 
 const API_SERVER = 'http://localhost:3000';
+//const API_SERVER = 'https://senso-alpha-2.herokuapp.com';
 
 export { DB_EVENTS, USER_ROLES, AUTH_EVENTS, API_SERVER };

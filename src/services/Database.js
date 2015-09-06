@@ -50,7 +50,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     joinClan: function joinClan (userData, clanID) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/join',
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/join',
         data: userData
       }
       return requestWrapper(req);
@@ -59,7 +59,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     leaveClan: function leaveClan (userData, clanID) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/leave',
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/leave',
         data: userData
       }
       return requestWrapper(req);
@@ -94,7 +94,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     toggleClanWar: function startWar (clanID) {
       let req = {
         method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/war/toggle'
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/war/toggle'
       }
       return requestWrapper(req);
     },
@@ -102,7 +102,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     isWarOn: function isWarOn (clanID) {
       let req = {
         method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/isWarOn'
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/isWarOn'
       }
       return requestWrapper(req);
     },
@@ -110,7 +110,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     getWarMap: function getWarMap (clanID) {
       let req = {
         method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/warMap'
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/warMap'
       }
       return requestWrapper(req);
     },
@@ -118,7 +118,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     resetWarMembers: function resetWarMembers (clanID) {
       let req = {
         method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/war/members/reset'
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/war/members/reset'
       }
       return requestWrapper(req);
     },
@@ -126,7 +126,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     initWarMap: function initWarMap (putData) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/warmap/init',
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID.toUpperCase() + '/warmap/init',
         data: putData
       }
       return requestWrapper(req);
@@ -135,7 +135,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     resetWarMap: function resetWarMap (clanID) {
       let req = {
         method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/warmap/reset'
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/warmap/reset'
       }
       return requestWrapper(req);
     },
@@ -143,7 +143,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     updateWarMap: function updateWarMap (putData) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/warmap/update',
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID.toUpperCase() + '/warmap/update',
         data: putData
       }
       return requestWrapper(req);
@@ -174,7 +174,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     getClanDetails: function getClanDetails (clanID) {
       let req = {
         method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase()
       }
       return requestWrapper(req);
     },
@@ -182,7 +182,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     getClanMembers: function getClanMembers (clanID) {
       let req = {
         method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/members'
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/members'
       }
       return requestWrapper(req);
     },
@@ -191,7 +191,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     getWarReadyMembers: function getWarReadyMembers (clanID) {
       let req = {
         method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/war/ready'
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/war/ready'
       }
       return requestWrapper(req);
     },
@@ -200,7 +200,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     getWarMembers: function getWarMembers (clanID) {
       let req = {
         method: 'GET',
-        url: API_SERVER + '/api/v1/clan/' + clanID + '/war/members'
+        url: API_SERVER + '/api/v1/clan/' + clanID.toUpperCase() + '/war/members'
       }
       return requestWrapper(req);
     },
@@ -209,7 +209,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     updateClanDetails: function updateClanDetails (putData) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + putData.clanID,
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID.toUpperCase(),
         data: putData
       }
       return requestWrapper(req);
@@ -219,7 +219,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     updateClanMembers: function updateClanMembers (putData) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + putData.clanID + '/members/update',
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID.toUpperCase() + '/members/update',
         data: putData
       }
       return requestWrapper(req);
@@ -229,7 +229,7 @@ function DatabaseService ($rootScope, $http, API_SERVER) {
     updateWarMembers: function updateWarMembers (putData) {
       let req = {
         method: 'PUT',
-        url: API_SERVER + '/api/v1/clan/' + putData.clanID +
+        url: API_SERVER + '/api/v1/clan/' + putData.clanID.toUpperCase() +
              '/war/members/update',
         data: putData
       }

@@ -27,7 +27,7 @@ class CreateClanController {
     } else {
       let clanDetails = {
         name: this.name,
-        clanID: this.clanID,
+        clanID: this.clanID.toUpperCase(),
         level: this.level,
         clanType: this.clanType,
         location: this.location,
@@ -38,12 +38,12 @@ class CreateClanController {
         if (!! r.success) {
           this.database.updateUser({
             userID: this.rootScope.user.userID,
-            clanID: this.clanID,
+            clanID: this.clanID.toUpperCase(),
             clanName: this.name,
             role: this.USER_ROLES.leader
           }).then((result) => {
             // NOTE: Use server retrieved data below
-            this.Session.clanID = this.clanID;
+            this.Session.clanID = this.clanID.toUpperCase();
             this.Session.clanName = this.name;
             this.Session.role = this.USER_ROLES.leader;
             this.state.go('members');

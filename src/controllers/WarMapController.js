@@ -14,13 +14,13 @@ class WarMapController {
       this.warMembers = [];
       this.warMap = [];
 
-      this.database.isWarOn(this.rootScope.user.clanID).then((data) => {
+      this.database.isWarOn(this.rootScope.user.clanID.toUpperCase()).then((data) => {
         if (! data.isWarOn) {
           this.state.go('war');
         } else {
-          this.database.getWarMembers(this.rootScope.user.clanID).then((warMembers) => {
+          this.database.getWarMembers(this.rootScope.user.clanID.toUpperCase()).then((warMembers) => {
             this.warMembers = warMembers;
-            this.database.getWarMap(this.rootScope.user.clanID).then((warMap) => {
+            this.database.getWarMap(this.rootScope.user.clanID.toUpperCase()).then((warMap) => {
               this.warMap = warMap;
             });
           });
@@ -40,7 +40,7 @@ class WarMapController {
     })
     .then((answer) => {
       this.warMap[answer.number - 1].players = answer.player;
-      this.database.updateWarMap({clanID: this.rootScope.user.clanID,
+      this.database.updateWarMap({clanID: this.rootScope.user.clanID.toUpperCase(),
                                   target: answer.number, player: answer.player})
         .then((r) => {
           if (!! r.success) {
@@ -55,11 +55,11 @@ class WarMapController {
   }
 
   endWar () {
-    this.database.resetWarMembers(this.rootScope.user.clanID).then((r) => {
+    this.database.resetWarMembers(this.rootScope.user.clanID.toUpperCase()).then((r) => {
       if (!! r.success) {
-        this.database.resetWarMap(this.rootScope.user.clanID).then((r) => {
+        this.database.resetWarMap(this.rootScope.user.clanID.toUpperCase()).then((r) => {
           if (!! r.success) {
-            this.database.toggleClanWar(this.rootScope.user.clanID).then((r) => {
+            this.database.toggleClanWar(this.rootScope.user.clanID.toUpperCase()).then((r) => {
               if (!! r.success) {
                 this.state.go('war');
               }
