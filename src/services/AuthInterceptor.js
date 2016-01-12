@@ -8,7 +8,7 @@ function AuthInterceptorService ($q, localStorageService) {
           config.headers.Authorization = 'Bearer ' + localStorageService.get('accessToken');
         }
       } else {
-        //console.log('login request');
+        // non-login request
       }
       return config;
     },

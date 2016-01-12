@@ -12,7 +12,8 @@ const USER_ROLES = {
 const AUTH_EVENTS = {
   loginSuccess: 'auth-login-success',
   loginFailed: 'auth-login-failed',
-  logoutSuccess: 'auth-logout-success'
+  logoutSuccess: 'auth-logout-success',
+  createProfile: 'auth-create-profile'
 };
 
 const API_SERVER = 'http://localhost:3000';

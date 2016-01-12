@@ -1,12 +1,14 @@
-function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
-    $http) {
+function AuthService ($rootScope, Session, database, AUTH_EVENTS) {
+  const GOOGLE_LOGIN = 'google';
+  const FB_LOGIN = 'facebook';
+
   return {
     googleLogin: function googleLogin (googleUser) {
       let profile = googleUser.getBasicProfile();
       let auth_token = googleUser.getAuthResponse().id_token;
       let loginData = {
         accessToken: auth_token,
-        loginService: 'google',
+        loginService: GOOGLE_LOGIN,
         email: profile.getEmail(),
         name: profile.getName()
       };
@@ -22,7 +24,7 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
           Session.create(loginData.name, loginData.email,
                          loginData.loginService, r.token);
           $rootScope.user = Session.sessionData;
-          $rootScope.$broadcast('CREATE_PROFILE');
+          $rootScope.$broadcast(AUTH_EVENTS.createProfile);
         }
       }, (err) => {
         console.log('Error:', err);
@@ -35,7 +37,7 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
           FB.api('/me?fields=id,name,email', (resp) => {
             let loginData = {
               accessToken: response.authResponse.accessToken,
-              loginService: 'facebook',
+              loginService: FB_LOGIN,
               email: resp.email,
               name: resp.name
             };
@@ -52,9 +54,10 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
                 Session.create(loginData.name, loginData.email,
                                loginData.loginService, r.token);
                 $rootScope.user = Session.sessionData;
-                $rootScope.$broadcast('CREATE_PROFILE');
+                $rootScope.$broadcast(AUTH_EVENTS.createProfile);
               }
             }, (err) => {
+              // HANDLE THIS
             });
           });
         } else if (response.status === 'not_authorized') {
@@ -66,12 +69,12 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
     },
 
     logout: function logout () {
-      if (Session.sessionData.loginService == 'google') {
+      if (Session.sessionData.loginService == GOOGLE_LOGIN) {
         let auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(() => {
           $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
         });
-      } else if (Session.sessionData.loginService == 'facebook') {
+      } else if (Session.sessionData.loginService == FB_LOGIN) {
         FB.getLoginStatus((resp) => {
           if (resp.status === 'connected') {
             FB.logout((response) => {
@@ -84,7 +87,6 @@ function AuthService ($rootScope, $window, Session, database, AUTH_EVENTS,
   }
 }
 
-AuthService.$inject = ['$rootScope', '$window', 'Session', 'database',
-                       'AUTH_EVENTS', '$http'];
+AuthService.$inject = ['$rootScope', 'Session', 'database', 'AUTH_EVENTS'];
 
 export { AuthService };
